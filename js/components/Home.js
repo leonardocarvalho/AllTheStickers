@@ -13,7 +13,7 @@ class StickerListItem extends React.Component {
     console.log("------------ this.sticker", this.props);
     return (
       <View>
-        <Text>{this.props.index} - {this.props.sticker} </Text>
+        <Text>{this.props.sticker.name}</Text>
       </View>
     )
   }
@@ -21,32 +21,39 @@ class StickerListItem extends React.Component {
 }
 
 
-
-
 class Home extends React.Component {
 
+
+  renderStickerSection(row) {
+    console.log("ROW", row);
+    return (
+        <StickerListItem  key={row.item.name} sticker={row.item} />
+    )
+
+  }
+
+  renderSectionTitle(row) {
+    return (
+      <Text>
+        {row.section.title}
+      </Text>
+    )
+  }
+
   render() {
-    console.log("this.props.stickers", this.props.stickers);
+
     let stickersSections = _.chain(this.props.stickers)
       .groupBy('section')
       .map((data, title) => ({title, data}))
       .value();
 
-    console.log("=== SECTIONS", stickersSections);
-
     return (
-
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <View style={{ flex: 1, justifyContent: 'center', paddingTop: 40 }}>
 
         <SectionList
-          renderItem={({sticker}) => {
-            console.log("TESRDSAFDSA sticker", sticker);
-            return (<StickerListItem keyExtractor={(sticker) => {sticker.name}} sticker={sticker} />)
-
-          }}
-          renderSectionHeader={({section}) => <Text title={section.title} />}
-          sections={stickersSections}
-        />
+          renderItem={this.renderStickerSection}
+          renderSectionHeader={this.renderSectionTitle}
+          sections={stickersSections} />
 
       </View>
     );
