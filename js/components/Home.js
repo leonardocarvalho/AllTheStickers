@@ -17,21 +17,22 @@ import StickerDetailsModal from './StickerDetailsModal';
 
 class StickerSectionList extends React.Component {
 
-  _renderItem = (item, index) => {
-    if (item.empty) {
+  _renderItem = (sticker, index) => {
+    if (sticker.empty) {
       return (
         <View key={index} style={styles.stickerItemContainer} />
       );
     }
+    const obtained = sticker.count > 0;
     return (
       <TouchableOpacity
-        key={item.name}
-        onPress={() => this.props.onStickerPress(item.stickerNumber)}
+        key={sticker.name}
+        onPress={() => this.props.onStickerPress(sticker.stickerNumber)}
       >
         <View style={styles.stickerItemContainer}>
-          <View style={styles.roundStyleContainer}>
-            <Text style={styles.itemText}>
-              {item.stickerNumber}
+          <View style={[styles.roundStyleContainer, obtained && styles.obtainedStickerContainer ]}>
+            <Text style={[styles.itemText, obtained && styles.obtainedStickerText]}>
+              {sticker.stickerNumber}
             </Text>
           </View>
         </View>
@@ -40,18 +41,17 @@ class StickerSectionList extends React.Component {
   }
 
   render() {
-    const stickers = this.props.stickers;
+    const { stickers } = this.props;
 
-    if (stickers.data.data) {
-      let emptyItemsCount = (5 - (_.size(stickers.data.data) % 5)) % 5;
-      console.log("EMPTY", stickers.data.data.title, emptyItemsCount);
+    if (stickers && stickers.length > 0) {
+      const emptyItemsCount = (5 - (stickers.length % 5)) % 5;
       emptyItem = {
         empty: true,
         title: "empty",
         name: "empty",
       }
 
-      let stickersDataWithEmptyItems = stickers.data.data.concat(Array(emptyItemsCount).fill(emptyItem));
+      const stickersDataWithEmptyItems = stickers.concat(Array(emptyItemsCount).fill(emptyItem));
       return (
         <View style={styles.stickerSectionContainer}>
           {stickersDataWithEmptyItems.map(this._renderItem)}
@@ -75,9 +75,9 @@ class Home extends React.Component {
     };
   }
 
-  renderStickerSection = (row) => {
+  renderStickerSection = ({ item }) => {
     return (
-      <StickerSectionList stickers={row.item} onStickerPress={this._stickerSelected} />
+      <StickerSectionList stickers={item.data.data} onStickerPress={this._stickerSelected} />
     )
   }
 
@@ -85,12 +85,18 @@ class Home extends React.Component {
     this.setState({ selectedStickerNumber, modalVisible: true });
   }
 
-  renderSectionTitle(row) {
+  renderSectionTitle({ section }) {
+    const sectionStickers = section.data[0].data.data; // WTF?!?!?!
+    const minIndex = sectionStickers.reduce((acc, s) => Math.min(acc, s.stickerNumber), Infinity);
+    const maxIndex = sectionStickers.reduce((acc, s) => Math.max(acc, s.stickerNumber), 0);
+    const sectionLen = sectionStickers.length;
+    const obtained = sectionStickers.reduce((acc, s) => acc + (s.count > 0), 0);
     return (
       <View style={styles.sectionHeader}>
         <Text style={styles.headerText}>
-          {row.section.title}
+          <Text style={styles.strongText}>{section.title}</Text> • {minIndex} a {maxIndex}
         </Text>
+        <Text style={[styles.headerText, styles.strongText]}>{obtained}/{sectionLen}</Text>
       </View>
     )
   }
@@ -162,30 +168,40 @@ const styles = StyleSheet.create({
     paddingTop: 40,
   },
   headerText: {
-    fontFamily: 'Rubik-Medium',
+    fontFamily: 'Rubik-Regular',
     fontSize: 16,
-    color: "#333333"
+    color: Colors.ALMOST_BLACK,
   },
   sectionHeader: {
     padding: 16,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.WHITE,
     borderBottomWidth: 1,
-    borderBottomColor: "#DDDDDD"
+    borderBottomColor: Colors.ALMOST_WHITE,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   stickerItemContainer: {
     width: 60,
     height: 60,
     marginBottom: 16
   },
+  obtainedStickerContainer: {
+    borderColor: Colors.DARK_GREEN,
+    borderWidth: 2,
+  },
   roundStyleContainer: {
     width: 60,
     height: 60,
     borderWidth: 1,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.WHITE,
     borderRadius: 35,
     borderColor: "#E0E0E0",
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  obtainedStickerText: {
+    color: Colors.DARK_GREEN,
+    fontFamily: 'Rubik-Medium',
   },
   itemText: {
     fontFamily: "Rubik-Regular",
