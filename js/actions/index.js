@@ -1,8 +1,8 @@
-const addCard = () => (dispatch) => {
-  dispatch({ type: 'NEW_CARD', data: { id: 0 }});
+const addSticker = () => (dispatch) => {
+  dispatch({ type: 'NEW_STICKER', sticker: { id: 0 }});
 };
 
 
 export {
-  addCard,
+  addSticker,
 };

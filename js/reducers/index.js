@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import cardsFixture from './cardsFixture';
 
-const cards = (state = cardsFixture, action) => {
+const stickers = (state = cardsFixture, action) => {
   switch (action.type) {
     case 'NEW_CARD':
       const newState = [...state];
@@ -14,5 +14,5 @@ const cards = (state = cardsFixture, action) => {
 };
 
 export default combineReducers({
-  cards,
+  stickers,
 });

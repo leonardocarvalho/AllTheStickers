@@ -30,4 +30,4 @@ export default [
   { section: 'Argentina', name: 'Dybala' },
   { section: 'Argentina', name: 'Di Maria' },
   { section: 'Argentina', name: 'Aguero' },
-].map(card => ({ ...card, count: 0 }));
+].map(sticker => ({ ...sticker, count: 0 }));
