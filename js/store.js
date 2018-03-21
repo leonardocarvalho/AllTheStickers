@@ -9,9 +9,10 @@ import reducer from './reducers';
 const persistedReducer = persistReducer({ key: 'root', storage }, reducer);
 const middlewares = [thunk];
 
-const configureStore = () => {
+const configureStore = async () => {
   const store = createStore(persistedReducer, {}, applyMiddleware(...middlewares));
   const persistor = persistStore(store);
+  // await persistor.purge();
   return { store, persistor }
 };
 

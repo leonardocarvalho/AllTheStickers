@@ -16,8 +16,8 @@ export default class App extends React.Component {
     };
   }
 
-  componentDidMount() {
-    const { store, persistor } = configureStore();
+  async componentDidMount() {
+    const { store, persistor } = await configureStore();
     this.setState({ store, persistor });
   }
 
