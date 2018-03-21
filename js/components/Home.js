@@ -1,4 +1,3 @@
-
 import React from 'react';
 import {
   View,
@@ -10,6 +9,7 @@ import {
 
 import { connect } from 'react-redux';
 
+import StyleSheet from '../helpers/F8StyleSheet';
 import { addSticker }  from '../actions';
 import _  from 'lodash';
 
@@ -122,3 +122,9 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, { addSticker })(Home);
+
+const styles = StyleSheet.create({
+  text: {
+    fontFamily: 'Rubik-Bold',
+  }
+});
