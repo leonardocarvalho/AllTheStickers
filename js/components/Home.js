@@ -11,6 +11,7 @@ import _ from 'lodash';
 
 import StyleSheet from '../helpers/F8StyleSheet';
 import Colors from '../common/colors';
+import { increaseStickerCount } from '../actions';
 
 import StickerDetailsModal from './StickerDetailsModal';
 
@@ -24,6 +25,14 @@ class StickerSectionList extends React.Component {
       );
     }
     const obtained = sticker.count > 0;
+    let badge = null;
+    if (sticker.count > 1) {
+      badge = (
+        <View style={badgeStyles.container}>
+          <Text style={badgeStyles.text}>{sticker.count}</Text>
+        </View>
+      )
+    }
     return (
       <TouchableOpacity
         key={sticker.name}
@@ -36,6 +45,7 @@ class StickerSectionList extends React.Component {
             </Text>
           </View>
         </View>
+        {badge}
       </TouchableOpacity>
     );
   }
@@ -82,7 +92,12 @@ class Home extends React.Component {
   }
 
   _stickerSelected = (selectedStickerNumber) => {
-    this.setState({ selectedStickerNumber, modalVisible: true });
+    const sticker = this.props.stickers.find(s => s.stickerNumber === selectedStickerNumber);
+    if (sticker.count === 0) {
+      this.props.increaseStickerCount(selectedStickerNumber);
+    } else {
+      this.setState({ selectedStickerNumber, modalVisible: true });
+    }
   }
 
   renderSectionTitle({ section }) {
@@ -159,7 +174,7 @@ const mapStateToProps = (state) => ({
   stickers: state.stickers,
 });
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps, { increaseStickerCount })(Home);
 
 const styles = StyleSheet.create({
   container: {
@@ -237,5 +252,24 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: Colors.DARK_GREY,
     opacity: 0.85,
+  },
+});
+
+const badgeStyles = StyleSheet.create({
+  container: {
+    height: 24,
+    width: 24,
+    borderRadius: 12,
+    backgroundColor: Colors.YELLOW,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    right: 0,
+    bottom: 7,
+  },
+  text: {
+    color: Colors.WHITE,
+    fontFamily: 'Rubik-Regular',
+    fontSize: 10,
   },
 });

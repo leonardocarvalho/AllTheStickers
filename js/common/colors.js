@@ -7,4 +7,5 @@ export default {
   LIGHT_GREY: 'rgb(140, 140, 140)',
   DARK_GREEN: 'rgb(50, 110, 100)',
   ALMOST_WHITE: 'rgb(221, 221, 221)',
+  YELLOW: 'rgb(247, 194, 69)',
 };
