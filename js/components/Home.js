@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 
 import StyleSheet from '../helpers/F8StyleSheet';
+import Colors from '../common/colors';
 
 import StickerDetailsModal from './StickerDetailsModal';
 
@@ -103,18 +104,36 @@ class Home extends React.Component {
   };
 
   render() {
+    const { stickers } = this.props;
 
-    let stickersSections = _.chain(this.props.stickers)
+    let stickersSections = _.chain(stickers)
       .groupBy('section')
       .map((data, title) => ({title, data, key: title}))
       .value();
 
-    let stickersSectionLists = _.map(stickersSections, (section, sectionIndex) => {
+    let stickersSectionLists = stickersSections.map((section, sectionIndex) => {
       return this.genListSection(sectionIndex, section)
     });
 
+    const toComplete = stickers.filter(sticker => sticker.count === 0).length;
+    const duplicates = stickers.map(s => Math.max(s.count - 1, 0)).reduce((acc, v) => acc + v, 0);
+
     return (
       <View style={styles.container}>
+        <View style={styles.headerContainer}>
+          <Text style={styles.headerTitle}>Minhas Figurinhas</Text>
+          <Text style={styles.headerStatus}>
+            Faltam
+            <Text style={styles.strongText}> {toComplete} figurinhas </Text>
+            para você completar o álbum
+          </Text>
+          <Text style={styles.headerStatus}>
+            e tem <Text style={styles.strongText}>{duplicates} para trocar</Text>
+          </Text>
+          <Text style={styles.headerInstructions}>
+            Clique nos números abaixo para atualizar sua contagem
+          </Text>
+        </View>
         <SectionList
           keyExtractor={(item) => { return item.key }}
           renderItem={this.renderStickerSection}
@@ -179,5 +198,28 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexWrap: 'wrap'
   },
-
+  headerContainer: {
+    marginBottom: 20,
+    paddingHorizontal: 15,
+  },
+  headerTitle: {
+    fontFamily: 'Rubik-Medium',
+    fontSize: 25,
+    color: Colors.DARK_GREEN,
+    marginBottom: 12,
+  },
+  strongText: {
+    fontFamily: 'Rubik-Medium',
+  },
+  headerStatus: {
+    fontFamily: 'Rubik-Regular',
+    fontSize: 13,
+    color: Colors.DARK_GREY,
+  },
+  headerInstructions: {
+    fontFamily: 'Rubik-Regular',
+    fontSize: 11,
+    color: Colors.DARK_GREY,
+    opacity: 0.85,
+  },
 });
