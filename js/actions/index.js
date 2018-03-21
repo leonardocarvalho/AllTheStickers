@@ -1,8 +1,13 @@
-const addSticker = () => (dispatch) => {
-  dispatch({ type: 'NEW_STICKER', sticker: { id: 0 }});
+const increaseStickerCount = (stickerNumber, quantity = 1) => (dispatch) => {
+  dispatch({ type: 'ALTER_STICKER_COUNT', stickerNumber, quantity });
+};
+
+const decreaseStickerCount = (stickerNumber, quantity = 1) => (dispatch) => {
+  dispatch({ type: 'ALTER_STICKER_COUNT', stickerNumber, quantity: -quantity });
 };
 
 
 export {
-  addSticker,
+  increaseStickerCount,
+  decreaseStickerCount,
 };

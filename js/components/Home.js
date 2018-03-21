@@ -6,25 +6,27 @@ import {
   SectionList,
   FlatList
 } from 'react-native';
-
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
 import StyleSheet from '../helpers/F8StyleSheet';
-import { addSticker }  from '../actions';
-import _  from 'lodash';
+
+import StickerDetailsModal from './StickerDetailsModal';
 
 
 class StickerSectionList extends React.Component {
 
-  _renderItem(item) {
-      if (item.empty) {
-        return (
-          <View style={styles.stickerItemContainer}>
-
-          </View>
-        )
-      }
+  _renderItem = (item, index) => {
+    if (item.empty) {
       return (
+        <View key={index} style={styles.stickerItemContainer} />
+      );
+    }
+    return (
+      <TouchableOpacity
+        key={item.name}
+        onPress={() => this.props.onStickerPress(item.stickerNumber)}
+      >
         <View style={styles.stickerItemContainer}>
           <View style={styles.roundStyleContainer}>
             <Text style={styles.itemText}>
@@ -32,7 +34,8 @@ class StickerSectionList extends React.Component {
             </Text>
           </View>
         </View>
-      );
+      </TouchableOpacity>
+    );
   }
 
   render() {
@@ -61,21 +64,29 @@ class StickerSectionList extends React.Component {
 
 }
 
-
 class Home extends React.Component {
+  constructor(props, ctx) {
+    super(props, ctx);
 
+    this.state = {
+      modalVisible: false,
+      selectedStickerNumber: null,
+    };
+  }
 
-  renderStickerSection(row) {
+  renderStickerSection = (row) => {
     return (
-        <StickerSectionList stickers={row.item} />
+      <StickerSectionList stickers={row.item} onStickerPress={this._stickerSelected} />
     )
+  }
 
+  _stickerSelected = (selectedStickerNumber) => {
+    this.setState({ selectedStickerNumber, modalVisible: true });
   }
 
   renderSectionTitle(row) {
     return (
       <View style={styles.sectionHeader}>
-
         <Text style={styles.headerText}>
           {row.section.title}
         </Text>
@@ -91,7 +102,6 @@ class Home extends React.Component {
     }
   };
 
-
   render() {
 
     let stickersSections = _.chain(this.props.stickers)
@@ -103,15 +113,18 @@ class Home extends React.Component {
       return this.genListSection(sectionIndex, section)
     });
 
-    console.log("====", stickersSectionLists);
-
     return (
-      <View style={{ flex: 1, justifyContent: 'center', paddingTop: 40 }}>
+      <View style={styles.container}>
         <SectionList
           keyExtractor={(item) => { return item.key }}
           renderItem={this.renderStickerSection}
           renderSectionHeader={this.renderSectionTitle}
           sections={stickersSectionLists} />
+        <StickerDetailsModal
+          visible={this.state.modalVisible}
+          onDismissRequest={() => this.setState({ modalVisible: false })}
+          stickerNumber={this.state.selectedStickerNumber}
+        />
       </View>
     );
   }
@@ -121,9 +134,14 @@ const mapStateToProps = (state) => ({
   stickers: state.stickers,
 });
 
-export default connect(mapStateToProps, { addSticker })(Home);
+export default connect(mapStateToProps)(Home);
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingTop: 40,
+  },
   headerText: {
     fontFamily: 'Rubik-Medium',
     fontSize: 16,
