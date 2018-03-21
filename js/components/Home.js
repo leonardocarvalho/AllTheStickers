@@ -16,11 +16,21 @@ import _  from 'lodash';
 
 class StickerSectionList extends React.Component {
 
-  _renderItem({item}) {
-      console.log("RENDER ITEM", item);
+  _renderItem(item) {
+      if (item.empty) {
+        return (
+          <View style={styles.stickerItemContainer}>
+
+          </View>
+        )
+      }
       return (
-        <View>
-          <Text>{item.stickerNumber}</Text>
+        <View style={styles.stickerItemContainer}>
+          <View style={styles.roundStyleContainer}>
+            <Text style={styles.itemText}>
+              {item.stickerNumber}
+            </Text>
+          </View>
         </View>
       );
   }
@@ -28,25 +38,21 @@ class StickerSectionList extends React.Component {
   render() {
     const stickers = this.props.stickers;
 
-    console.log("stickers from section", stickers.data);
+    if (stickers.data.data) {
+      let emptyItemsCount = (5 - (_.size(stickers.data.data) % 5)) % 5;
+      console.log("EMPTY", stickers.data.data.title, emptyItemsCount);
+      emptyItem = {
+        empty: true,
+        title: "empty",
+        name: "empty",
+      }
 
-    if (stickers.data) {
-      // console.log("stickers from section inside");
+      let stickersDataWithEmptyItems = stickers.data.data.concat(Array(emptyItemsCount).fill(emptyItem));
       return (
-        <View style={{ flex: 1 }}>
-          <FlatList
-            numColumns={5}
-            data={stickers.data.data}
-            // getItemLayout={(layoutData, index) => {
-            //   return {
-            //     length: 100,
-            //     offset: 100 * index,
-            //     index,
-            //   }
-            // }}
-            renderItem={this._renderItem}
-          />
+        <View style={styles.stickerSectionContainer}>
+          {stickersDataWithEmptyItems.map(this._renderItem)}
         </View>
+
       )
 
     }
@@ -60,8 +66,6 @@ class Home extends React.Component {
 
 
   renderStickerSection(row) {
-
-    console.log("ROW", row);
     return (
         <StickerSectionList stickers={row.item} />
     )
@@ -70,14 +74,16 @@ class Home extends React.Component {
 
   renderSectionTitle(row) {
     return (
-      <Text>
-        {row.section.title}
-      </Text>
+      <View style={styles.sectionHeader}>
+
+        <Text style={styles.headerText}>
+          {row.section.title}
+        </Text>
+      </View>
     )
   }
 
   genListSection = (index, data) => {
-    console.log("INDEX", index);
     return {
       key: `${index}`,
       title: data.title,
@@ -93,10 +99,6 @@ class Home extends React.Component {
       .map((data, title) => ({title, data, key: title}))
       .value();
 
-
-    console.log("stickersSections", stickersSections);
-
-
     let stickersSectionLists = _.map(stickersSections, (section, sectionIndex) => {
       return this.genListSection(sectionIndex, section)
     });
@@ -105,13 +107,11 @@ class Home extends React.Component {
 
     return (
       <View style={{ flex: 1, justifyContent: 'center', paddingTop: 40 }}>
-
         <SectionList
           keyExtractor={(item) => { return item.key }}
           renderItem={this.renderStickerSection}
           renderSectionHeader={this.renderSectionTitle}
           sections={stickersSectionLists} />
-
       </View>
     );
   }
@@ -124,7 +124,42 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, { addSticker })(Home);
 
 const styles = StyleSheet.create({
-  text: {
-    fontFamily: 'Rubik-Bold',
-  }
+  headerText: {
+    fontFamily: 'Rubik-Medium',
+    fontSize: 16,
+    color: "#333333"
+  },
+  sectionHeader: {
+    padding: 16,
+    backgroundColor: "#FFFFFF",
+    borderBottomWidth: 1,
+    borderBottomColor: "#DDDDDD"
+  },
+  stickerItemContainer: {
+    width: 60,
+    height: 60,
+    marginBottom: 16
+  },
+  roundStyleContainer: {
+    width: 60,
+    height: 60,
+    borderWidth: 1,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 35,
+    borderColor: "#E0E0E0",
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  itemText: {
+    fontFamily: "Rubik-Regular",
+    fontSize: 20,
+  },
+  stickerSectionContainer: {
+    padding: 16,
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap'
+  },
+
 });
