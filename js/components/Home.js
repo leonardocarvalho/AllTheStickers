@@ -1,8 +1,8 @@
-
 import React from 'react';
 import { View, Text, TouchableOpacity, SectionList } from 'react-native';
 import { connect } from 'react-redux';
 
+import StyleSheet from '../helpers/F8StyleSheet';
 import { addSticker }  from '../actions';
 import { _ } from 'lodash';
 
@@ -13,7 +13,7 @@ class StickerListItem extends React.Component {
     console.log("------------ this.sticker", this.props);
     return (
       <View>
-        <Text>{this.props.sticker.name}</Text>
+        <Text style={styles.text}>{this.props.sticker.name}</Text>
       </View>
     )
   }
@@ -54,7 +54,6 @@ class Home extends React.Component {
           renderItem={this.renderStickerSection}
           renderSectionHeader={this.renderSectionTitle}
           sections={stickersSections} />
-
       </View>
     );
   }
@@ -65,3 +64,9 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, { addSticker })(Home);
+
+const styles = StyleSheet.create({
+  text: {
+    fontFamily: 'Rubik-Bold',
+  }
+});
