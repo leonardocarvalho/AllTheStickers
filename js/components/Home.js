@@ -77,6 +77,17 @@ class StickerSectionList extends React.Component {
 }
 
 class Home extends React.Component {
+  static navigationOptions = {
+    header: null,
+    headerStyle: {
+      elevation: 0,
+      shadowOpacity: 0
+    }
+  };
+
+
+
+
   constructor(props, ctx) {
     super(props, ctx);
 
@@ -146,11 +157,8 @@ class Home extends React.Component {
           <Text style={styles.headerTitle}>Minhas Figurinhas</Text>
           <Text style={styles.headerStatus}>
             Faltam
-            <Text style={styles.strongText}> {toComplete} figurinhas </Text>
-            para você completar o álbum
-          </Text>
-          <Text style={styles.headerStatus}>
-            e tem <Text style={styles.strongText}>{duplicates} para trocar</Text>
+            <Text style={styles.strongText}> {toComplete} figurinhas para completar </Text>
+            o álbum e <Text style={styles.strongText}>{duplicates} figurinhas para trocar</Text>
           </Text>
           <Text style={styles.headerInstructions}>
             Clique nos números abaixo para atualizar sua contagem
@@ -193,12 +201,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    paddingTop: 40,
-    paddingBottom: 60,
+    paddingTop: 20,
+    paddingBottom: 50,
+    backgroundColor: Colors.WHITE,
   },
   headerText: {
     fontFamily: 'Rubik-Regular',
-    fontSize: 16,
+    letterSpacing: -1,
+    fontSize: 20,
     color: Colors.ALMOST_BLACK,
   },
   sectionHeader: {
@@ -216,6 +226,7 @@ const styles = StyleSheet.create({
   },
   obtainedStickerContainer: {
     borderColor: Colors.DARK_GREEN,
+    backgroundColor: Colors.DARK_GREEN,
     borderWidth: 2,
   },
   roundStyleContainer: {
@@ -229,7 +240,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   obtainedStickerText: {
-    color: Colors.DARK_GREEN,
+    color: Colors.WHITE,
     fontFamily: 'Rubik-Medium',
   },
   itemText: {
@@ -255,15 +266,17 @@ const styles = StyleSheet.create({
   },
   strongText: {
     fontFamily: 'Rubik-Medium',
+    color: Colors.DARK_GREEN,
   },
   headerStatus: {
     fontFamily: 'Rubik-Regular',
-    fontSize: 13,
+    fontSize: 16,
     color: Colors.DARK_GREY,
   },
   headerInstructions: {
+    marginTop: 10,
     fontFamily: 'Rubik-Regular',
-    fontSize: 11,
+    fontSize: 12,
     color: Colors.DARK_GREY,
     opacity: 0.85,
   },

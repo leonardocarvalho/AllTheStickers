@@ -1,13 +1,17 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import { StackNavigator } from 'react-navigation';
+import { StackNavigator, SafeAreaView } from 'react-navigation';
 
+import StyleSheet from './helpers/F8StyleSheet';
+import Colors from './common/colors';
 import configureStore from './store';
 import Home from './components/Home';
 import ExchangeScreen from './components/ExchangeScreen';
 import StickerStatus from './components/StickerStatus';
 import StatusReader from './components/StatusReader';
+
+
 
 const RootStack = StackNavigator(
   {
@@ -18,6 +22,15 @@ const RootStack = StackNavigator(
   },
   {
     initialRouteName: 'Home',
+    cardStyle: {
+      shadowColor: 'transparent',
+     },
+    navigationOptions: {
+      headerStyle: {
+        elevation: 0,
+        shadowOpacity: 0
+      }
+    }
   },
 );
 
@@ -43,9 +56,19 @@ export default class App extends React.Component {
     return (
       <Provider store={this.state.store}>
         <PersistGate loading={null} persistor={this.state.persistor}>
-          <RootStack />
+          <SafeAreaView style={styles.container}>
+            <RootStack />
+          </SafeAreaView>
         </PersistGate>
       </Provider>
     );
   }
 }
+
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});

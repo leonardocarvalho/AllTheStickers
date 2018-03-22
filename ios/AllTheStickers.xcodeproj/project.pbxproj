@@ -324,7 +324,7 @@
 			remoteGlobalIDString = 9936F32F1F5F2E5B0010BF04;
 			remoteInfo = "privatedata-tvOS";
 		};
-		CC2E200820636323003D13AA /* PBXContainerItemProxy */ = {
+		D3525456206361DE001AC335 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 1CEE8ACE0D4B4A14B9C6A9CB /* RCTCamera.xcodeproj */;
 			proxyType = 2;
@@ -609,7 +609,7 @@
 				00E356EF1AD99517003FC87E /* AllTheStickersTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				CC2E1FDF2063631D003D13AA /* Recovered References */,
+				D352542D206360F5001AC335 /* Recovered References */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -654,7 +654,7 @@
 			path = "New Group1";
 			sourceTree = "<group>";
 		};
-		CC2E1FDF2063631D003D13AA /* Recovered References */ = {
+		D352542D206360F5001AC335 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
 				3142BA6E78B549B69EABA6EA /* libRCTCamera.a */,
@@ -662,10 +662,10 @@
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
-		CC2E200520636320003D13AA /* Products */ = {
+		D3525453206361DD001AC335 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CC2E200920636323003D13AA /* libRCTCamera.a */,
+				D3525457206361DE001AC335 /* libRCTCamera.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -797,7 +797,7 @@
 					ProjectRef = ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */;
 				},
 				{
-					ProductGroup = CC2E200520636320003D13AA /* Products */;
+					ProductGroup = D3525453206361DD001AC335 /* Products */;
 					ProjectRef = 1CEE8ACE0D4B4A14B9C6A9CB /* RCTCamera.xcodeproj */;
 				},
 				{
@@ -1107,11 +1107,11 @@
 			remoteRef = CC1A702A2061F0820006D3DD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CC2E200920636323003D13AA /* libRCTCamera.a */ = {
+		D3525457206361DE001AC335 /* libRCTCamera.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libRCTCamera.a;
-			remoteRef = CC2E200820636323003D13AA /* PBXContainerItemProxy */;
+			remoteRef = D3525456206361DE001AC335 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
