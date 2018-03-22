@@ -7,7 +7,7 @@ import Colors from '../common/colors';
 
 const SubmitButton = (props) => {
   return (
-    <TouchableOpacity onPress={props.onPress} activeOpacity={0.8}>
+    <TouchableOpacity onPress={props.onPress} activeOpacity={props.activeOpacity}>
       <View style={[styles.container, { backgroundColor: props.color }]}>
         <Text style={[styles.text, { color: props.textColor }]}>{props.text}</Text>
       </View>
@@ -15,6 +15,7 @@ const SubmitButton = (props) => {
   );
 };
 SubmitButton.propTypes = {
+  activeOpacity: PropTypes.number,
   text: PropTypes.string.isRequired,
   onPress: PropTypes.func.isRequired,
   color: PropTypes.string.isRequired,
@@ -22,6 +23,7 @@ SubmitButton.propTypes = {
 };
 SubmitButton.defaultProps = {
   textColor: Colors.WHITE,
+  activeOpacity: 0.8,
 };
 
 export default SubmitButton;

@@ -30,4 +30,5 @@ export default [
   { section: 'Argentina', name: 'Dybala' },
   { section: 'Argentina', name: 'Di Maria' },
   { section: 'Argentina', name: 'Aguero' },
+  ...(new Array(670).fill({ section: 'Other', name: 'Other' }))
 ].map((sticker, index) => ({ ...sticker, count: 0, stickerNumber: index + 1 }));

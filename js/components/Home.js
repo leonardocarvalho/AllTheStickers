@@ -14,6 +14,7 @@ import Colors from '../common/colors';
 import { increaseStickerCount } from '../actions';
 
 import StickerDetailsModal from './StickerDetailsModal';
+import SubmitButton from './SubmitButton';
 
 
 class StickerSectionList extends React.Component {
@@ -160,6 +161,12 @@ class Home extends React.Component {
           renderItem={this.renderStickerSection}
           renderSectionHeader={this.renderSectionTitle}
           sections={stickersSectionLists} />
+        <View style={styles.floatBottom}>
+          <SubmitButton
+            text="TROCAR"
+            color={Colors.DARK_GREEN}
+            onPress={() => this.props.navigation.navigate('Exchange')} />
+        </View>
         <StickerDetailsModal
           visible={this.state.modalVisible}
           onDismissRequest={() => this.setState({ modalVisible: false })}
@@ -177,6 +184,12 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, { increaseStickerCount })(Home);
 
 const styles = StyleSheet.create({
+  floatBottom: {
+    left: 16,
+    right: 16,
+    bottom: 16,
+    position: 'absolute',
+  },
   container: {
     flex: 1,
     justifyContent: 'center',

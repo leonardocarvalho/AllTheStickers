@@ -15,6 +15,16 @@ const stickers = (state = cardsFixture, action) => {
   }
 };
 
+const peerStatus = (state = { desired: [], available: [] }, action) => {
+  switch(action.type) {
+    case 'PEER_STATUS_RECEIVED':
+      return action.status;
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   stickers,
+  peerStatus,
 });
