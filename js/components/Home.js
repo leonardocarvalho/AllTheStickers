@@ -194,6 +194,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     paddingTop: 40,
+    paddingBottom: 60,
   },
   headerText: {
     fontFamily: 'Rubik-Regular',
