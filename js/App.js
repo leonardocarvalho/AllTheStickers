@@ -12,7 +12,6 @@ import StickerStatus from './components/StickerStatus';
 import StatusReader from './components/StatusReader';
 
 
-
 const RootStack = StackNavigator(
   {
     Home: { screen: Home },
@@ -23,8 +22,8 @@ const RootStack = StackNavigator(
   {
     initialRouteName: 'Home',
     cardStyle: {
-      shadowColor: 'transparent',
-     },
+      shadowColor: Colors.TRANSPARENT,
+    },
     navigationOptions: {
       headerStyle: {
         elevation: 0,
@@ -64,8 +63,6 @@ export default class App extends React.Component {
     );
   }
 }
-
-
 
 const styles = StyleSheet.create({
   container: {

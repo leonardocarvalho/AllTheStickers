@@ -85,9 +85,6 @@ class Home extends React.Component {
     }
   };
 
-
-
-
   constructor(props, ctx) {
     super(props, ctx);
 
