@@ -38,7 +38,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Acessar foto QRCode?</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Rubik-Bold.ttf</string>
@@ -51,6 +51,17 @@
 		<string>Rubik-Medium.ttf</string>
 		<string>Rubik-MediumItalic.ttf</string>
 		<string>Rubik-Regular.ttf</string>
+		<string>Entypo.ttf</string>
+		<string>EvilIcons.ttf</string>
+		<string>Feather.ttf</string>
+		<string>FontAwesome.ttf</string>
+		<string>Foundation.ttf</string>
+		<string>Ionicons.ttf</string>
+		<string>MaterialCommunityIcons.ttf</string>
+		<string>MaterialIcons.ttf</string>
+		<string>Octicons.ttf</string>
+		<string>SimpleLineIcons.ttf</string>
+		<string>Zocial.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

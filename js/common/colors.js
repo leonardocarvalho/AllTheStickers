@@ -1,6 +1,7 @@
 export default {
   WHITE: 'white',
   BLACK: 'black',
+  FADED_BLACK: 'rgba(0, 0, 0, 0.3)',
   TRANSPARENT: 'transparent',
   ALMOST_BLACK: 'rgb(51, 51, 51)',
   DARK_GREY: 'rgb(85, 85, 85)',

@@ -6,6 +6,7 @@ import { StackNavigator, SafeAreaView } from 'react-navigation';
 import StyleSheet from './helpers/F8StyleSheet';
 import Colors from './common/colors';
 import configureStore from './store';
+import Intro from './components/Intro';
 import Home from './components/Home';
 import ExchangeScreen from './components/ExchangeScreen';
 import StickerStatus from './components/StickerStatus';
@@ -14,22 +15,23 @@ import StatusReader from './components/StatusReader';
 
 const RootStack = StackNavigator(
   {
+    Intro: { screen: Intro },
     Home: { screen: Home },
     Exchange: { screen: ExchangeScreen },
     StickerStatus: { screen: StickerStatus },
     StatusReader: { screen: StatusReader },
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'Intro',
     cardStyle: {
       shadowColor: Colors.TRANSPARENT,
     },
     navigationOptions: {
       headerStyle: {
         elevation: 0,
-        shadowOpacity: 0
+        shadowOpacity: 0,
       }
-    }
+    },
   },
 );
 

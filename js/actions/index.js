@@ -10,9 +10,13 @@ const peerStatusReceived = (status) => (dispatch) => {
   dispatch({ type: 'PEER_STATUS_RECEIVED', status });
 };
 
+const introDone = () => (dispatch) => {
+  dispatch({ type: 'INTRO_DONE' });
+};
 
 export {
   increaseStickerCount,
   decreaseStickerCount,
   peerStatusReceived,
+  introDone,
 };
