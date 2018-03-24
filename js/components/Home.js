@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import { SafeAreaView } from 'react-navigation';
 
 import StyleSheet from '../helpers/F8StyleSheet';
 import Colors from '../common/colors';
@@ -30,7 +31,7 @@ class StickerSectionList extends React.Component {
     if (sticker.count > 1) {
       badge = (
         <View style={badgeStyles.container}>
-          <Text style={badgeStyles.text}>{sticker.count}</Text>
+          <Text style={badgeStyles.text}>+{sticker.count - 1}</Text>
         </View>
       )
     }
@@ -156,35 +157,37 @@ class Home extends React.Component {
     const duplicates = stickers.map(s => Math.max(s.count - 1, 0)).reduce((acc, v) => acc + v, 0);
 
     return (
-      <View style={styles.container}>
-        <View style={styles.headerContainer}>
-          <Text style={styles.headerTitle}>Minhas Figurinhas</Text>
-          <Text style={styles.headerStatus}>
-            Faltam
-            <Text style={styles.strongText}> {toComplete} figurinhas para completar </Text>
-            o álbum e <Text style={styles.strongText}>{duplicates} figurinhas para trocar</Text>
-          </Text>
-          <Text style={styles.headerInstructions}>
-            Clique nos números abaixo para atualizar sua contagem
-          </Text>
+      <SafeAreaView style={styles.safeContainer}>
+        <View style={styles.container}>
+          <View style={styles.headerContainer}>
+            <Text style={styles.headerTitle}>Minhas Figurinhas</Text>
+            <Text style={styles.headerStatus}>
+              Faltam
+              <Text style={styles.strongText}> {toComplete} figurinhas para completar </Text>
+              o álbum e <Text style={styles.strongText}>{duplicates} figurinhas para trocar</Text>
+            </Text>
+            <Text style={styles.headerInstructions}>
+              Clique nos números abaixo para atualizar sua contagem
+            </Text>
+          </View>
+          <SectionList
+            keyExtractor={(item) => { return item.key }}
+            renderItem={this.renderStickerSection}
+            renderSectionHeader={this.renderSectionTitle}
+            sections={stickersSectionLists} />
+          <View style={styles.floatBottom}>
+            <SubmitButton
+              text="TROCAR"
+              color={Colors.DARK_GREEN}
+              onPress={() => this.props.navigation.navigate('ExchangeOptions')} />
+          </View>
+          <StickerDetailsModal
+            visible={this.state.modalVisible}
+            onDismissRequest={() => this.setState({ modalVisible: false })}
+            stickerNumber={this.state.selectedStickerNumber}
+          />
         </View>
-        <SectionList
-          keyExtractor={(item) => { return item.key }}
-          renderItem={this.renderStickerSection}
-          renderSectionHeader={this.renderSectionTitle}
-          sections={stickersSectionLists} />
-        <View style={styles.floatBottom}>
-          <SubmitButton
-            text="TROCAR"
-            color={Colors.DARK_GREEN}
-            onPress={() => this.props.navigation.navigate('ExchangeOptions')} />
-        </View>
-        <StickerDetailsModal
-          visible={this.state.modalVisible}
-          onDismissRequest={() => this.setState({ modalVisible: false })}
-          stickerNumber={this.state.selectedStickerNumber}
-        />
-      </View>
+      </SafeAreaView>
     );
   }
 }
@@ -201,6 +204,9 @@ const styles = StyleSheet.create({
     right: 16,
     bottom: 16,
     position: 'absolute',
+  },
+  safeContainer: {
+    flex: 1,
   },
   container: {
     flex: 1,
@@ -300,7 +306,9 @@ const badgeStyles = StyleSheet.create({
   },
   text: {
     color: Colors.WHITE,
-    fontFamily: 'Rubik-Regular',
+    textShadowColor: Colors.ALMOST_BLACK,
+    textShadowRadius: 5,
+    fontFamily: 'Rubik-Medium',
     fontSize: 10,
   },
 });

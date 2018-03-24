@@ -1,11 +1,32 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import QRCodeScanner from 'react-native-qrcode-scanner';
+import { BigNumber } from 'bignumber.js'
+import { SafeAreaView } from 'react-navigation';
+import { View, Text, TouchableOpacity } from 'react-native';
 
+import StyleSheet from '../helpers/F8StyleSheet';
+import Colors from '../common/colors';
 import { peerStatusReceived } from '../actions';
 import { decodeStickers } from '../helpers';
 
 class StatusReader extends React.Component {
+
+  static navigationOptions = {
+    headerStyle: {
+      elevation: 0,
+      shadowOpacity: 0,
+      backgroundColor: "#ffffff",
+      borderBottomWidth: 0,
+      shadowColor: 'transparent',
+      shadowRadius: 0,
+      shadowOffset: {
+          height: 0,
+      }
+    },
+    headerTintColor: Colors.DARK_GREEN
+  };
+
   _dataScanned(data) {
     const values = decodeStickers(data, this.props.stickers.length);
     const status = this.props.stickers
@@ -24,10 +45,21 @@ class StatusReader extends React.Component {
 
   render() {
     return (
-      <QRCodeScanner
-        onRead={event => this._dataScanned(event.data)}
-        onClose={() => this.props.navigation.goBack()}
-      />
+      <SafeAreaView style={styles.safeContainer}>
+        <View style={styles.backgroundContainer}>
+          <View style={styles.headerContainer}>
+            <Text style={[styles.title, styles.strong, styles.green]}>Leia um QR Code</Text>
+            <Text style={styles.subtitle}>
+              Leia o QR Code de outra pessoa, e encontre as figurinhas
+              que vocês podem trocar
+            </Text>
+          </View>
+          <QRCodeScanner
+            onRead={event => this._dataScanned(event.data)}
+            onClose={() => this.props.navigation.goBack()}
+          />
+        </View>
+      </SafeAreaView>
     );
   }
 }
@@ -35,3 +67,37 @@ class StatusReader extends React.Component {
 const mapStateToProps = ({ stickers }) => ({ stickers });
 
 export default connect(mapStateToProps, { peerStatusReceived })(StatusReader);
+
+
+const styles = StyleSheet.create({
+  safeContainer: {
+    flex: 1,
+    backgroundColor: Colors.WHITE,
+  },
+  backgroundContainer: {
+    backgroundColor: Colors.WHITE,
+  },
+  container: {
+      flex: 1,
+    backgroundColor: Colors.WHITE,
+    padding: 16,
+    justifyContent: 'space-between',
+  },
+  headerContainer: {
+      padding: 16,
+  },
+  title: {
+    fontSize: 24,
+    paddingBottom: 8,
+    color: Colors.DARK_GREEN,
+  },
+  subtitle: {
+    color: Colors.LIGHT_GREY,
+    fontFamily: 'Rubik-Regular',
+    fontSize: 15,
+    paddingBottom: 12,
+  },
+  strong: {
+    fontFamily: 'Rubik-Medium',
+  },
+});

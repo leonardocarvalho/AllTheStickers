@@ -62,10 +62,8 @@ export default class App extends React.Component {
     return (
       <Provider store={this.state.store}>
         <PersistGate loading={null} persistor={this.state.persistor}>
-          <SafeAreaView style={styles.container}>
             {this._renderDev()}
             <RootStack />
-          </SafeAreaView>
         </PersistGate>
       </Provider>
     );
