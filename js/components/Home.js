@@ -37,6 +37,7 @@ class StickerSectionList extends React.Component {
     return (
       <TouchableOpacity
         key={sticker.name}
+        onLongPress={() => this.props.onStickerLongPress(sticker.stickerNumber)}
         onPress={() => this.props.onStickerPress(sticker.stickerNumber)}
       >
         <View style={styles.stickerItemContainer}>
@@ -96,8 +97,14 @@ class Home extends React.Component {
 
   renderStickerSection = ({ item }) => {
     return (
-      <StickerSectionList stickers={item.data.data} onStickerPress={this._stickerSelected} />
+      <StickerSectionList stickers={item.data.data}
+        onStickerLongPress={this._stickerLongPressed}
+        onStickerPress={this._stickerSelected} />
     )
+  }
+
+  _stickerLongPressed = (selectedStickerNumber) => {
+    this.setState({ selectedStickerNumber, modalVisible: true });
   }
 
   _stickerSelected = (selectedStickerNumber) => {
