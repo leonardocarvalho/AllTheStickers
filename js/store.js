@@ -12,7 +12,6 @@ const middlewares = [thunk];
 const configureStore = async () => {
   const store = createStore(persistedReducer, {}, applyMiddleware(...middlewares));
   const persistor = persistStore(store);
-  await persistor.purge();
   return { store, persistor }
 };
 

@@ -8,6 +8,7 @@ import Colors from './common/colors';
 import configureStore from './store';
 import Intro from './components/Intro';
 import Home from './components/Home';
+import ExchangeOptionsScreen from './components/ExchangeOptionsScreen';
 import ExchangeScreen from './components/ExchangeScreen';
 import StickerStatus from './components/StickerStatus';
 import StatusReader from './components/StatusReader';
@@ -18,9 +19,10 @@ const RootStack = StackNavigator(
   {
     Intro: { screen: Intro },
     Home: { screen: Home },
-    Exchange: { screen: ExchangeScreen },
+    ExchangeOptions: { screen: ExchangeOptionsScreen },
     StickerStatus: { screen: StickerStatus },
     StatusReader: { screen: StatusReader },
+    Exchange:  { screen: ExchangeScreen },
   },
   {
     initialRouteName: 'Intro',

@@ -177,7 +177,7 @@ class Home extends React.Component {
           <SubmitButton
             text="TROCAR"
             color={Colors.DARK_GREEN}
-            onPress={() => this.props.navigation.navigate('Exchange')} />
+            onPress={() => this.props.navigation.navigate('ExchangeOptions')} />
         </View>
         <StickerDetailsModal
           visible={this.state.modalVisible}

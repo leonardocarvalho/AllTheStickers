@@ -1,22 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import QRCodeScanner from 'react-native-qrcode-scanner';
-import { BigNumber } from 'bignumber.js'
 
 import { peerStatusReceived } from '../actions';
+import { decodeStickers } from '../helpers';
 
 class StatusReader extends React.Component {
   _dataScanned(data) {
-    const status = this.props.stickers.map(s => ({ ...s, count: 0 }));
-
-    let index = status.length;
-    let number = new BigNumber(data);
-    while (number.isGreaterThan(0)) {
-      index--;
-      const next = number.modulo(3).toNumber();
-      status[index].count = next;
-      number = number.dividedToIntegerBy(3);
-    }
+    const values = decodeStickers(data, this.props.stickers.length);
+    const status = this.props.stickers
+      .sort((s1, s2) => s1.stickerNumber  - s2.stickerNumber)
+      .map((s, index) => ({ ...s, count: values[index] || 0 }));
 
     const tradeStatus = { desired: [], available: [] };
     status.forEach(sticker => {
@@ -25,7 +19,7 @@ class StatusReader extends React.Component {
     });
 
     this.props.peerStatusReceived(tradeStatus);
-    this.props.navigation.goBack();
+    this.props.navigation.navigate('Exchange');
   }
 
   render() {

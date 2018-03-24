@@ -6,16 +6,21 @@ import StyleSheet from '../helpers/F8StyleSheet';
 import Colors from '../common/colors';
 
 const DevOperations = (props) => {
+  _button = (text, action) => (
+    <TouchableOpacity
+      onPress={() => props.dispatch(action)}
+      style={styles.actionButton}
+    >
+      <Text style={styles.actionLabel}>{text}</Text>
+    </TouchableOpacity>
+  )
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Dev Operations</Text>
       <View style={styles.actionsContainer}>
-        <TouchableOpacity
-          onPress={() => props.dispatch({ type: 'INTRO_RESET' })}
-          style={styles.actionButton}
-        >
-          <Text style={styles.actionLabel}>Reset Intro State</Text>
-        </TouchableOpacity>
+        {this._button('Reset Intro State', { type: 'INTRO_RESET' })}
+        {this._button('Clear stickers', { type: 'CLEAR_STICKERS' })}
       </View>
     </View>
   )

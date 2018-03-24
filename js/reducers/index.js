@@ -10,6 +10,8 @@ const stickers = (state = cardsFixture, action) => {
       const newState = [...state];
       newState[stickerIndex] = { ...sticker, count: Math.max(sticker.count + quantity, 0) };
       return newState;
+    case 'CLEAR_STICKERS':
+      return state.map(s => ({ ...s, count: 0 }));
     default:
       return state;
   }
