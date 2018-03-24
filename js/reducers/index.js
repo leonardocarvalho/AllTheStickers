@@ -28,6 +28,8 @@ const introDone = (state = false, action) => {
   switch(action.type) {
     case 'INTRO_DONE':
       return true;
+    case 'INTRO_RESET':
+      return false;
     default:
       return state;
   }

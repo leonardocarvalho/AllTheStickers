@@ -11,6 +11,7 @@ import Home from './components/Home';
 import ExchangeScreen from './components/ExchangeScreen';
 import StickerStatus from './components/StickerStatus';
 import StatusReader from './components/StatusReader';
+import DevOperations from './components/DevOperations';
 
 
 const RootStack = StackNavigator(
@@ -51,6 +52,8 @@ export default class App extends React.Component {
     this.setState({ store, persistor });
   }
 
+  _renderDev = () => global.__DEV__ ? <DevOperations /> : null;
+
   render() {
     if (!this.state.store) return null;
 
@@ -58,6 +61,7 @@ export default class App extends React.Component {
       <Provider store={this.state.store}>
         <PersistGate loading={null} persistor={this.state.persistor}>
           <SafeAreaView style={styles.container}>
+            {this._renderDev()}
             <RootStack />
           </SafeAreaView>
         </PersistGate>
