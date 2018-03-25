@@ -6,9 +6,14 @@ import StyleSheet from '../helpers/F8StyleSheet';
 import Colors from '../common/colors';
 
 const SubmitButton = (props) => {
+  let disabled = props.disabled || false;
+  let opacity = disabled ? (props.disabledOpacity || 1) : 1;
   return (
-    <TouchableOpacity onPress={props.onPress} activeOpacity={props.activeOpacity}>
-      <View style={[styles.container, { backgroundColor: props.color }]}>
+    <TouchableOpacity
+      onPress={props.onPress}
+      disabled={disabled}
+      activeOpacity={props.activeOpacity}>
+      <View style={[styles.container, { backgroundColor: props.color, opacity: opacity }]}>
         <Text style={[styles.text, { color: props.textColor }]}>{props.text}</Text>
       </View>
     </TouchableOpacity>

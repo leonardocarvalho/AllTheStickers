@@ -120,7 +120,7 @@ const slides = () => [
     last: true,
     text: (
       <View>
-        <Text style={[styles.text, { color: Colors.BLACK }]}>Encontre as que voê</Text>
+        <Text style={[styles.text, { color: Colors.BLACK }]}>Encontre as que você</Text>
         <Text style={[styles.text, styles.strong, { color: Colors.BLACK }]}>
           precisa rapidamente
         </Text>

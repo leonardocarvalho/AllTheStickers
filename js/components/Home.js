@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import { SafeAreaView } from 'react-navigation';
 
+import DevOperations from '../components/DevOperations';
 import StyleSheet from '../helpers/F8StyleSheet';
 import Colors from '../common/colors';
 import { increaseStickerCount } from '../actions';
@@ -141,6 +142,8 @@ class Home extends React.Component {
     }
   };
 
+  _renderDev = () => global.__DEV__ ? <DevOperations /> : null;
+
   render() {
     const { stickers } = this.props;
 
@@ -159,12 +162,14 @@ class Home extends React.Component {
     return (
       <SafeAreaView style={styles.safeContainer}>
         <View style={styles.container}>
+          {this._renderDev()}
           <View style={styles.headerContainer}>
-            <Text style={styles.headerTitle}>Minhas Figurinhas</Text>
+            <Text style={styles.headerTitle}>Minhas Figurinhas • Rússia 2018</Text>
             <Text style={styles.headerStatus}>
               Faltam
               <Text style={styles.strongText}> {toComplete} figurinhas para completar </Text>
-              o álbum e <Text style={styles.strongText}>{duplicates} figurinhas para trocar</Text>
+              o álbum e você tem
+              <Text style={styles.strongText}> {duplicates} figurinhas para trocar</Text>
             </Text>
             <Text style={styles.headerInstructions}>
               Clique nos números abaixo para atualizar sua contagem
@@ -207,6 +212,7 @@ const styles = StyleSheet.create({
   },
   safeContainer: {
     flex: 1,
+    backgroundColor: Colors.WHITE,
   },
   container: {
     flex: 1,
@@ -224,7 +230,7 @@ const styles = StyleSheet.create({
   sectionHeader: {
     padding: 16,
     backgroundColor: Colors.WHITE,
-    borderBottomWidth: 1,
+    // borderBottomWidth: 1,
     borderBottomColor: Colors.ALMOST_WHITE,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -265,12 +271,13 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap'
   },
   headerContainer: {
+    paddingTop: 10,
     marginBottom: 20,
     paddingHorizontal: 15,
   },
   headerTitle: {
     fontFamily: 'Rubik-Medium',
-    fontSize: 25,
+    fontSize: 22,
     color: Colors.DARK_GREEN,
     marginBottom: 12,
   },
