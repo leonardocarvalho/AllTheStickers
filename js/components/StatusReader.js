@@ -3,12 +3,16 @@ import { connect } from 'react-redux';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { BigNumber } from 'bignumber.js'
 import { SafeAreaView } from 'react-navigation';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { Alert, View, Text, TouchableOpacity } from 'react-native';
 
 import StyleSheet from '../helpers/F8StyleSheet';
 import Colors from '../common/colors';
 import { peerStatusReceived } from '../actions';
 import { decodeStickers } from '../helpers';
+import SubmitButton from './SubmitButton';
+
+import QRdecoder from 'react-native-qrimage-decoder';
+import ImagePicker from 'react-native-image-picker';
 
 class StatusReader extends React.Component {
 
@@ -27,6 +31,15 @@ class StatusReader extends React.Component {
     headerTintColor: Colors.DARK_GREEN
   };
 
+  constructor(props, ctx) {
+    super(props, ctx);
+
+    this.state = {
+      imageSrc: null
+    };
+    this._pickImage = this._pickImage.bind(this)
+  }
+
   _dataScanned(data) {
     const values = decodeStickers(data, this.props.stickers.length);
     const status = this.props.stickers
@@ -43,7 +56,52 @@ class StatusReader extends React.Component {
     this.props.navigation.navigate('Exchange');
   }
 
+
+  _pickImage() {
+
+    ImagePicker.showImagePicker({}, (response) => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      }
+      else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      }
+      else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      }
+      else {
+        // let source = { uri: response.uri };
+
+        // You can also display the image using data:
+        let source = { uri: 'data:image/jpeg;base64,' + response.data };
+
+        this.setState({
+          imageSrc: source.uri
+        });
+      }
+    });
+  }
+
+  onSuccess = (data) => {
+    this._dataScanned(data);
+    this.setState({imageSrc: ''})
+  }
+
+  onError = (data) => {
+    Alert.alert('Erro', "Erro ao ler o código :(");
+  }
+
   render() {
+
+    let bottomContent = (
+      <View style={styles.bottomContent}>
+        <TouchableOpacity onPress={() => this._pickImage()}>
+          <Text style={styles.back}>USAR IMAGEM</Text>
+        </TouchableOpacity>
+      </View>
+    )
     return (
       <SafeAreaView style={styles.safeContainer}>
         <View style={styles.backgroundContainer}>
@@ -54,9 +112,11 @@ class StatusReader extends React.Component {
               que vocês podem trocar
             </Text>
           </View>
+          <QRdecoder src={this.state.imageSrc} onSuccess={this.onSuccess} onError={this.onError} />
           <QRCodeScanner
             reactivate = {true}
             reactivateTimeout = {5000}
+            bottomContent={bottomContent}
             onRead={event => this._dataScanned(event.data)}
             onClose={() => this.props.navigation.goBack()}
           />
@@ -78,15 +138,14 @@ const styles = StyleSheet.create({
   },
   backgroundContainer: {
     backgroundColor: Colors.WHITE,
+    flex: 1,
   },
   container: {
     flex: 1,
     backgroundColor: Colors.WHITE,
-    padding: 16,
-    justifyContent: 'space-between',
   },
   headerContainer: {
-      padding: 16,
+    padding: 16,
   },
   title: {
     fontSize: 24,
@@ -100,6 +159,19 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
   },
   strong: {
+    fontFamily: 'Rubik-Medium',
+  },
+  floatBottom: {
+    left: 16,
+    right: 16,
+    bottom: 16,
+    position: 'absolute',
+  },
+  bottomContent: {
+    marginTop: 30,
+  },
+  back: {
+    color: Colors.DARK_GREY,
     fontFamily: 'Rubik-Medium',
   },
 });

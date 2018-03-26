@@ -4,5 +4,6 @@ export default {
   mobilePhone: String.fromCodePoint(0x1f4f2),
   megaphone: String.fromCodePoint(0x1f4e3),
   sunglasses: String.fromCodePoint(0x1f60e),
-  wink: String.fromCodePoint(0x1F609)
+  wink: String.fromCodePoint(0x1F609),
+  cry: String.fromCodePoint(0x1F62D),
 }

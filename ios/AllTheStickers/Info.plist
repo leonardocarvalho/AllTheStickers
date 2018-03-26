@@ -39,6 +39,12 @@
 	<string>Acessar foto QRCode?</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Acessar QR Code das imagens</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+  <string>682 would like to save photos to your photo gallery</string>
+  <key>NSMicrophoneUsageDescription</key>
+  <string>682 would like to your microphone (for videos)</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Rubik-Bold.ttf</string>

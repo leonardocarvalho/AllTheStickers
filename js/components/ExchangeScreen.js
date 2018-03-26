@@ -36,6 +36,7 @@ class ExchangeScreen extends React.Component {
     };
     this._toggleToProvide = this._toggleToProvide.bind(this)
     this._toggleToReceive = this._toggleToReceive.bind(this)
+    this._renderFoundStickersToExchange  = this._renderFoundStickersToExchange.bind(this)
   }
 
   _performExchange() {
@@ -106,12 +107,17 @@ class ExchangeScreen extends React.Component {
   }
 
   _renderFoundStickersToExchange(availableINeed, desiredIHave) {
+    let buttonDisabled = (
+      this.state.willProvide.length == 0 && this.state.willReceive.length == 0
+    );
 
     return (
-      <View>
+      <View style={styles.container}>
+        <Text style={styles.largeEmoji}>
+          {Emojis.rocket}
+        </Text>
         <ScrollView style={styles.scrollContainer}>
           <View style={styles.headerContainer}>
-
             <Text style={styles.title}>Encontramos <Text style={[styles.green, styles.strong]}>
                 {availableINeed.length} figurinhas que você precisa
               </Text> e <Text
@@ -173,15 +179,43 @@ class ExchangeScreen extends React.Component {
 
           }
         </ScrollView>
-
+        <View style={styles.floatBottom}>
+          <SubmitButton
+            text="ATUALIZAR MINHAS FIGURINHAS"
+            color={Colors.DARK_GREEN}
+            disabled={buttonDisabled}
+            disabledOpacity={0.9}
+            onPress={() => this._performExchange()} />
+        </View>
       </View>
     )
   }
 
   _renderFoundNoStickersToExchange() {
     return (
-      <View>
-        <Text>Não encontramos figurinhas para trocar :(</Text>
+      <View style={styles.container}>
+        <Text style={styles.largeEmoji}>
+          {Emojis.cry}
+        </Text>
+        <View style={styles.container}>
+          <View style={styles.headerContainer}>
+            <Text style={styles.title}>
+              Não encontramos figurinhas para trocar.
+            </Text>
+            <Text style={styles.subtitle}>
+              Atualize seu controle e procure outros amigos e amigas para
+              continuar trocando {Emojis.wink}
+            </Text>
+          </View>
+
+          <View style={[styles.backContainer, styles.floatBottom]}>
+            <TouchableOpacity onPress={() => this.props.navigation.popToTop()}>
+              <Text style={styles.back}>VOLTAR</Text>
+            </TouchableOpacity>
+          </View>
+
+        </View>
+
       </View>
     )
   }
@@ -196,9 +230,6 @@ class ExchangeScreen extends React.Component {
       a => stickers.find(s => s.stickerNumber === a).count === 0
     );
 
-    let buttonDisabled = (
-      this.state.willProvide.length == 0 && this.state.willReceive.length == 0
-    );
 
     return (
       <SafeAreaView style={styles.safeContainer}>
@@ -206,9 +237,6 @@ class ExchangeScreen extends React.Component {
 
           <View style={styles.headerContainer}>
             <Text style={[styles.title, styles.strong, styles.green]}>Troque suas figurinhas</Text>
-            <Text style={styles.largeEmoji}>
-              {Emojis.rocket}
-            </Text>
           </View>
 
           {
@@ -216,21 +244,6 @@ class ExchangeScreen extends React.Component {
             this._renderFoundStickersToExchange(availableINeed, desiredIHave) :
             this._renderFoundNoStickersToExchange()
           }
-
-          {
-
-            <View style={styles.floatBottom}>
-              <SubmitButton
-                text="ATUALIZAR MINHAS FIGURINHAS"
-                color={Colors.DARK_GREEN}
-                disabled={buttonDisabled}
-                disabledOpacity={0.9}
-                onPress={() => this._performExchange()} />
-            </View>
-
-
-          }
-
 
         </View>
     </SafeAreaView>
@@ -337,5 +350,10 @@ const styles = StyleSheet.create({
   bottomPaddingContainer: {
     paddingBottom: 100,
     marginBottom: 100,
-  }
+  },
+  backContainer: {
+    justifyContent: 'flex-end',
+    paddingBottom: 16,
+    alignItems: 'center',
+  },
 });
