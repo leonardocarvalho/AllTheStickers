@@ -2,6 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { StackNavigator, SafeAreaView } from 'react-navigation';
+import firebase from 'react-native-firebase';
 
 import StyleSheet from './helpers/F8StyleSheet';
 import Colors from './common/colors';
@@ -52,8 +53,6 @@ export default class App extends React.Component {
     const { store, persistor } = await configureStore();
     this.setState({ store, persistor });
   }
-
-
 
   render() {
     if (!this.state.store) return null;
