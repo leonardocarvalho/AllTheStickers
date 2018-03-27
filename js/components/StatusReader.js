@@ -1,7 +1,7 @@
 import React from 'react';
+import firebase from 'react-native-firebase';
 import { connect } from 'react-redux';
 import QRCodeScanner from 'react-native-qrcode-scanner';
-import { BigNumber } from 'bignumber.js'
 import { SafeAreaView } from 'react-navigation';
 import { View, Text, TouchableOpacity } from 'react-native';
 
@@ -28,7 +28,12 @@ class StatusReader extends React.Component {
   };
 
   _dataScanned(data) {
-    const values = decodeStickers(data, this.props.stickers.length);
+    try {
+      const values = decodeStickers(data, this.props.stickers.length);
+    } catch(error) {
+      firebase.analytics().logEvent('read_qr_code_error', { encoded: error });
+      return;
+    }
     const status = this.props.stickers
       .sort((s1, s2) => s1.stickerNumber  - s2.stickerNumber)
       .map((s, index) => ({ ...s, count: values[index] || 0 }));

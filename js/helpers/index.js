@@ -1,5 +1,3 @@
-import { BigNumber } from 'bignumber.js'
-
 const padDigits = (value, numberDigits, filler = '0') => {
   const strValue = value + '';
   return (
@@ -37,11 +35,7 @@ const decodeStickers = (encoded, size) => {
   for (let index = 0; index < encoded.length; index++) {
     let charIndex = ENCODING27.indexOf(encoded[index]);
     if (charIndex === -1) {
-      // to handle error; For now just fill with ones so no exchange
-      while (decoded.length < size) {
-        decoded.push(1);
-      }
-      return decoded;
+      throw encoded;
     }
     decoded.push(charIndex % 3);
     charIndex = parseInt(charIndex / 3);

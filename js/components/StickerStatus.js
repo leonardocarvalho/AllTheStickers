@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Text, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import QRCode from 'react-native-qrcode';
-import { BigNumber } from 'bignumber.js';
 
 import StyleSheet from '../helpers/F8StyleSheet';
 import Colors from '../common/colors';
