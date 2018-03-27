@@ -29,7 +29,7 @@ class ExchangeScreen extends React.Component {
 
 
   render() {
-    const toExchange = this.props.stickers.reduce((acc, s) => acc + Math.max(s.count - 1, 0), 0);
+    const toExchange = this.props.stickers.reduce((acc, s) => acc + (s.count > 1), 0);
     const toComplete = this.props.stickers.reduce((acc, s) => acc + (s.count === 0), 0);
 
     return (

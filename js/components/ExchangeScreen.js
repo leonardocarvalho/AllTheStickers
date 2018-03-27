@@ -81,7 +81,7 @@ class ExchangeScreen extends React.Component {
   }
 
   _renderStickerList(stickerList, selectionList, onStickerPress) {
-    if (stickerList && stickerList.length == 0) {
+    if (!stickerList || stickerList.length == 0) {
       return null;
     }
 
@@ -92,13 +92,15 @@ class ExchangeScreen extends React.Component {
       <View style={styles.stickerSectionContainer}>
         {
           stickerListWithEmptyItems.map(
-            (stickerNumber, index) => {
-              return this._renderStickerItem(
-                stickerNumber,
-                _.includes(selectionList, stickerNumber),
-                onStickerPress
-              )
-            }
+            (stickerNumber, index) => (
+              <View key={index}>
+                {this._renderStickerItem(
+                  stickerNumber,
+                  _.includes(selectionList, stickerNumber),
+                  onStickerPress
+                )}
+              </View>
+            )
           )
         }
       </View>
@@ -109,73 +111,70 @@ class ExchangeScreen extends React.Component {
 
     return (
       <View>
-        <ScrollView style={styles.scrollContainer}>
-          <View style={styles.headerContainer}>
+        <View style={styles.headerContainer}>
 
-            <Text style={styles.title}>Encontramos <Text style={[styles.green, styles.strong]}>
-                {availableINeed.length} figurinhas que você precisa
-              </Text> e <Text
-                style={[styles.green, styles.strong]}>
-                {desiredIHave.length} repetidas que você tem pra trocar
-              </Text>
+          <Text style={styles.title}>Encontramos <Text style={[styles.green, styles.strong]}>
+              {availableINeed.length} figurinhas que você precisa
+            </Text> e <Text
+              style={[styles.green, styles.strong]}>
+              {desiredIHave.length} repetidas que você tem pra trocar
             </Text>
-            <Text style={styles.subtitle}>Clique nas figurinhas para selecionar
-            as que você trocar, e atualize o seu controle {Emojis.wink}</Text>
-          </View>
+          </Text>
+          <Text style={styles.subtitle}>Clique nas figurinhas para selecionar
+          as que você trocar, e atualize o seu controle {Emojis.wink}</Text>
+        </View>
 
 
-          {
-            availableINeed.length > 0 ?
-              (
-                <View>
-                  <View style={styles.sectionHeader}>
-                    <Text style={styles.sectionTitle}>
-                      FIGURINHAS QUE VOCÊ PRECISA • {availableINeed.length}
-                    </Text>
+        {
+          availableINeed.length > 0 ?
+            (
+              <View>
+                <View style={styles.sectionHeader}>
+                  <Text style={styles.sectionTitle}>
+                    FIGURINHAS QUE VOCÊ PRECISA • {availableINeed.length}
+                  </Text>
 
-                    <Text style={styles.sectionSubtitle}>
-                      Você está selecionando {this.state.willReceive.length} figurinhas para receber
-                    </Text>
-                  </View>
-                  {
-                    this._renderStickerList(
-                      availableINeed,
-                      this.state.willReceive,
-                      this._toggleToReceive
-                    )
-                  }
+                  <Text style={styles.sectionSubtitle}>
+                    Você está selecionando {this.state.willReceive.length} figurinhas para receber
+                  </Text>
                 </View>
-              ) : null
+                {
+                  this._renderStickerList(
+                    availableINeed,
+                    this.state.willReceive,
+                    this._toggleToReceive
+                  )
+                }
+              </View>
+            ) : null
 
-          }
+        }
 
-          {
-            desiredIHave.length > 0 ?
-              (
-                <View style={styles.bottomPaddingContainer}>
-                  <View style={styles.sectionHeader}>
-                    <Text style={styles.sectionTitle}>
-                      FIGURINHAS QUE VOCÊ TEM PARA TROCAR • {desiredIHave.length}
-                    </Text>
-                    <Text style={styles.sectionSubtitle}>
-                      Você está selecionando {this.state.willProvide.length} figurinhas para dar
-                    </Text>
-                  </View>
-                  {
-                    this._renderStickerList(
-                      desiredIHave,
-                      this.state.willProvide,
-                      this._toggleToProvide
-                    )
-                  }
+        {
+          desiredIHave.length > 0 ?
+            (
+              <View>
+                <View style={styles.sectionHeader}>
+                  <Text style={styles.sectionTitle}>
+                    FIGURINHAS QUE VOCÊ TEM PARA TROCAR • {desiredIHave.length}
+                  </Text>
+                  <Text style={styles.sectionSubtitle}>
+                    Você está selecionando {this.state.willProvide.length} figurinhas para dar
+                  </Text>
                 </View>
-              ) : null
+                {
+                  this._renderStickerList(
+                    desiredIHave,
+                    this.state.willProvide,
+                    this._toggleToProvide
+                  )
+                }
+              </View>
+            ) : null
 
-          }
-        </ScrollView>
-
+        }
       </View>
-    )
+    );
   }
 
   _renderFoundNoStickersToExchange() {
@@ -202,38 +201,28 @@ class ExchangeScreen extends React.Component {
 
     return (
       <SafeAreaView style={styles.safeContainer}>
-        <View style={styles.container}>
-
+        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <View style={styles.headerContainer}>
             <Text style={[styles.title, styles.strong, styles.green]}>Troque suas figurinhas</Text>
             <Text style={styles.largeEmoji}>
               {Emojis.rocket}
             </Text>
           </View>
-
           {
             (desiredIHave.length > 0 ||  availableINeed.length > 0) ?
             this._renderFoundStickersToExchange(availableINeed, desiredIHave) :
             this._renderFoundNoStickersToExchange()
           }
-
-          {
-
-            <View style={styles.floatBottom}>
-              <SubmitButton
-                text="ATUALIZAR MINHAS FIGURINHAS"
-                color={Colors.DARK_GREEN}
-                disabled={buttonDisabled}
-                disabledOpacity={0.9}
-                onPress={() => this._performExchange()} />
-            </View>
-
-
-          }
-
-
+        </ScrollView>
+        <View style={styles.floatBottom}>
+          <SubmitButton
+            text="ATUALIZAR MINHAS FIGURINHAS"
+            color={Colors.DARK_GREEN}
+            disabled={buttonDisabled}
+            disabledOpacity={0.9}
+            onPress={() => this._performExchange()} />
         </View>
-    </SafeAreaView>
+      </SafeAreaView>
     );
   }
 }
@@ -246,6 +235,9 @@ export default connect(
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  contentContainer: {
+    paddingBottom: 50,
   },
   safeContainer: {
     flex: 1,
@@ -278,7 +270,6 @@ const styles = StyleSheet.create({
   },
   sectionHeader: {
     padding: 16,
-
   },
   sectionTitle: {
     fontFamily: 'Rubik-Medium',
@@ -325,17 +316,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexWrap: 'wrap'
   },
-  scrollContainer: {
-    // marginBottom: 50,
-  },
   floatBottom: {
     left: 16,
     right: 16,
     bottom: 16,
     position: 'absolute',
   },
-  bottomPaddingContainer: {
-    paddingBottom: 100,
-    marginBottom: 100,
-  }
 });

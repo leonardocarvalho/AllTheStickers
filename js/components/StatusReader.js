@@ -55,8 +55,8 @@ class StatusReader extends React.Component {
             </Text>
           </View>
           <QRCodeScanner
-            reactivate = {true}
-            reactivateTimeout = {5000}
+            reactivate={true}
+            reactivateTimeout={5000}
             onRead={event => this._dataScanned(event.data)}
             onClose={() => this.props.navigation.goBack()}
           />
@@ -78,12 +78,7 @@ const styles = StyleSheet.create({
   },
   backgroundContainer: {
     backgroundColor: Colors.WHITE,
-  },
-  container: {
-    flex: 1,
-    backgroundColor: Colors.WHITE,
-    padding: 16,
-    justifyContent: 'space-between',
+    flexGrow: 1,
   },
   headerContainer: {
       padding: 16,
