@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Dimensions } from 'react-native';
 import { StackNavigator, SafeAreaView } from 'react-navigation';
 
 import Colors from '../common/colors';
@@ -44,7 +44,7 @@ class ExchangeScreen extends React.Component {
             </Text>
           </View>
           <View>
-            <Text style={styles.title}>
+            <Text style={styles.secondaryTitle}>
               Você tem
               <Text style={styles.strong}> {toExchange} figurinhas repetidas para trocar </Text>
               {Emojis.huggingFace}
@@ -59,7 +59,7 @@ class ExchangeScreen extends React.Component {
             />
           </View>
           <View>
-            <Text style={styles.title}>
+            <Text style={styles.secondaryTitle}>
               Você precisa de
               <Text style={styles.strong}> {toComplete} figurinhas para completar seu álbum </Text>
               {Emojis.rocket}
@@ -115,10 +115,15 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
     color: Colors.DARK_GREY,
   },
+  secondaryTitle: {
+    fontSize: 20,
+    paddingBottom: 8,
+    color: Colors.DARK_GREY,
+  },
   subtitle: {
     color: Colors.LIGHT_GREY,
     fontFamily: 'Rubik-Regular',
-    fontSize: 15,
+    fontSize: 13,
     paddingBottom: 12,
   },
   strong: {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import QRCode from 'react-native-qrcode';
 import { BigNumber } from 'bignumber.js';
@@ -42,7 +42,7 @@ class StickerStatus extends React.Component {
           <View style={styles.qrCodeContainer}>
             <QRCode
               value={encodeStickers(this.props.stickers)}
-              size={300} />
+              size={Math.min(300, (Dimensions.get('window').width - 60))} />
           </View>
         </View>
       </SafeAreaView>

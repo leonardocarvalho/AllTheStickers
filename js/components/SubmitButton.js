@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Dimensions } from 'react-native';
 
 import StyleSheet from '../helpers/F8StyleSheet';
 import Colors from '../common/colors';
@@ -43,6 +43,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontFamily: 'Rubik-Medium',
-    fontSize: 18,
+    fontSize: Dimensions.get("window").width < 330 ? 14 : 16,
   },
 });
