@@ -11,6 +11,10 @@ import StyleSheet from '../helpers/F8StyleSheet';
 import { increaseStickerCount, decreaseStickerCount } from '../actions';
 import SubmitButton from './SubmitButton';
 
+
+const STICKER_SECTION_PADDING = 16;
+const ROUND_CONTAINER_DIAMETER = 60;
+
 class ExchangeScreen extends React.Component {
 
   static navigationOptions = {
@@ -91,7 +95,10 @@ class ExchangeScreen extends React.Component {
       return null;
     }
 
-    const emptyItemsCount = (5 - (stickerList.length % 5)) % 5;
+    var {height, width} = Dimensions.get('window');
+    let rowStickersCount = Math.floor((width - 2 * STICKER_SECTION_PADDING)/ROUND_CONTAINER_DIAMETER);
+    const emptyItemsCount = (rowStickersCount - (stickers.length % rowStickersCount)) % rowStickersCount;
+
     let stickerListWithEmptyItems = stickerList.concat(Array(emptyItemsCount).fill(-1))
 
     return (
