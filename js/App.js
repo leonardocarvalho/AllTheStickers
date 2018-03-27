@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -14,16 +15,18 @@ import ExchangeScreen from './components/ExchangeScreen';
 import StickerStatus from './components/StickerStatus';
 import StatusReader from './components/StatusReader';
 
+import screenLogger from './helpers/screenLogger';
+
 
 const RootStack = StackNavigator(
-  {
+  _.mapValues({
     Intro: { screen: Intro },
     Home: { screen: Home },
     ExchangeOptions: { screen: ExchangeOptionsScreen },
     StickerStatus: { screen: StickerStatus },
     StatusReader: { screen: StatusReader },
     Exchange:  { screen: ExchangeScreen },
-  },
+  }, (screenConfig) => ({ ...screenConfig, screen: screenLogger(screenConfig.screen) })),
   {
     initialRouteName: 'Intro',
     cardStyle: {
@@ -52,6 +55,23 @@ export default class App extends React.Component {
   async componentDidMount() {
     const { store, persistor } = await configureStore();
     this.setState({ store, persistor });
+
+    const setupUser = (userId) => {
+      const analytics = firebase.analytics();
+      analytics.setAnalyticsCollectionEnabled(true);
+      analytics.setUserId(userId);
+    }
+
+    let userId = store.userId;
+    if (userId) {
+      setupUser(userId);
+    }
+    store.subscribe(() => {
+      const newUserId = store.getState().userId;
+      if (newUserId !== userId) {
+        setupUser(newUserId);
+      }
+    });
   }
 
   render() {

@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import cardsFixture from './cardsFixture';
+import uuid from 'uuid/v4';
 
 const stickers = (state = cardsFixture, action) => {
   switch (action.type) {
@@ -37,8 +38,20 @@ const introDone = (state = false, action) => {
   }
 }
 
+const userId = (state = null, action) => {
+  switch(action.type) {
+    case 'NEW_USER':
+      return uuid();
+    case 'RESET_USER':
+      return null;
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   stickers,
   peerStatus,
   introDone,
+  userId,
 });

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { View, Text, TouchableOpacity, ScrollView} from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import _ from 'lodash';
+import firebase from 'react-native-firebase';
 
 import Colors from '../common/colors';
 import Emojis from '../common/emojis';
@@ -39,8 +40,13 @@ class ExchangeScreen extends React.Component {
   }
 
   _performExchange() {
-    this.state.willReceive.forEach((stickerNumber) => this.props.increaseStickerCount(stickerNumber, 1));
-    this.state.willProvide.forEach((stickerNumber) => this.props.decreaseStickerCount(stickerNumber, 1));
+    const { willReceive, willProvide } = this.state;
+    firebase.analytics().logEvent(
+      'sticker_exchange',
+      { given: willProvide.length, received: willReceive.length }
+    );
+    willReceive.forEach((stickerNumber) => this.props.increaseStickerCount(stickerNumber, 1));
+    willProvide.forEach((stickerNumber) => this.props.decreaseStickerCount(stickerNumber, 1));
     this.props.navigation.popToTop();
   }
 

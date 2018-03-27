@@ -103,6 +103,12 @@ class Home extends React.Component {
     };
   }
 
+  componentDidMount() {
+    if (!this.props.userId) {
+      this.props.dispatch({ type: 'NEW_USER' });
+    }
+  }
+
   renderStickerSection = ({ item }) => {
     return (
       <StickerSectionList stickers={item.data.data}
@@ -118,7 +124,7 @@ class Home extends React.Component {
   _stickerSelected = (selectedStickerNumber) => {
     const sticker = this.props.stickers.find(s => s.stickerNumber === selectedStickerNumber);
     if (sticker.count === 0) {
-      this.props.increaseStickerCount(selectedStickerNumber);
+      this.props.dispatch(increaseStickerCount(selectedStickerNumber));
     } else {
       this.setState({ selectedStickerNumber, modalVisible: true });
     }
@@ -203,11 +209,8 @@ class Home extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  stickers: state.stickers,
-});
-
-export default connect(mapStateToProps, { increaseStickerCount })(Home);
+const mapStateToProps = ({ stickers, userId }) => ({ stickers, userId });
+export default connect(mapStateToProps)(Home);
 
 const styles = StyleSheet.create({
   floatBottom: {
