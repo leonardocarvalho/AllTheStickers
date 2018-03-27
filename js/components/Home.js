@@ -4,7 +4,8 @@ import {
   Text,
   TouchableOpacity,
   SectionList,
-  FlatList
+  FlatList,
+  Dimensions,
 } from 'react-native';
 import { connect } from 'react-redux';
 import _ from 'lodash';
@@ -18,6 +19,8 @@ import { increaseStickerCount } from '../actions';
 import StickerDetailsModal from './StickerDetailsModal';
 import SubmitButton from './SubmitButton';
 
+const STICKER_SECTION_PADDING = 16;
+const ROUND_CONTAINER_DIAMETER = 60;
 
 class StickerSectionList extends React.Component {
 
@@ -56,9 +59,12 @@ class StickerSectionList extends React.Component {
 
   render() {
     const { stickers } = this.props;
+    var {height, width} = Dimensions.get('window');
+    let rowStickersCount = Math.floor((width - 2 * STICKER_SECTION_PADDING)/ROUND_CONTAINER_DIAMETER);
 
     if (stickers && stickers.length > 0) {
-      const emptyItemsCount = (5 - (stickers.length % 5)) % 5;
+      const emptyItemsCount = (rowStickersCount - (stickers.length % rowStickersCount)) % rowStickersCount;
+
       emptyItem = {
         empty: true,
         title: "empty",
@@ -236,8 +242,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   stickerItemContainer: {
-    width: 60,
-    height: 60,
+    width: ROUND_CONTAINER_DIAMETER,
+    height: ROUND_CONTAINER_DIAMETER,
     marginBottom: 16
   },
   obtainedStickerContainer: {
@@ -246,8 +252,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   roundStyleContainer: {
-    width: 60,
-    height: 60,
+    width: ROUND_CONTAINER_DIAMETER,
+    height: ROUND_CONTAINER_DIAMETER,
     borderWidth: 1,
     backgroundColor: Colors.WHITE,
     borderRadius: 35,

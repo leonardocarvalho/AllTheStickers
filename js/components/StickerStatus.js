@@ -42,7 +42,6 @@ class StickerStatus extends React.Component {
           <View style={styles.qrCodeContainer}>
             <QRCode
               value={encodeStickers(this.props.stickers)}
-              bgColor={Colors.DARK_GREEN}
               size={300} />
           </View>
         </View>

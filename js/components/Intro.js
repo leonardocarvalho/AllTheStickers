@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { View, Text } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+// import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import Colors from '../common/colors';
 import Emojis from '../common/emojis';
@@ -59,7 +59,7 @@ class Intro extends React.Component {
   _renderNextButton = () => {
     return (
       <View style={styles.circle}>
-        <Ionicons name="md-arrow-forward" size={30} color={Colors.WHITE} />
+        {/* <Ionicons name="md-arrow-forward" size={30} color={Colors.WHITE} /> */}
       </View>
     );
   }
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
-    fontSize: 35,
+    fontSize: 30,
     fontFamily: 'Rubik-Regular',
     color: Colors.WHITE,
     textAlign: 'center',
