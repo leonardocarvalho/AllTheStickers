@@ -19,7 +19,6 @@
 		139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
-		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
@@ -62,6 +61,7 @@
 		CC703B7F2064CC9000743F03 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CC703B742064CC9000743F03 /* Zocial.ttf */; };
 		CC703B802064CC9000743F03 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CC703B752064CC9000743F03 /* Feather.ttf */; };
 		CC703B812064CC9000743F03 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CC703B762064CC9000743F03 /* Foundation.ttf */; };
+		CCBFDBA5206A73380042CB8B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		EB94BCB9D1B24E01A79CA9A3 /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3142BA6E78B549B69EABA6EA /* libRCTCamera.a */; };
 		FEAB04AB21D94B86AFD7E110 /* libRNFirebase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 008BF1B4BB174687B055AD0A /* libRNFirebase.a */; };
 /* End PBXBuildFile section */
@@ -1258,7 +1258,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				CC1A70992061F5490006D3DD /* Rubik-Light.ttf in Resources */,
 				CC1A70962061F5490006D3DD /* Rubik-MediumItalic.ttf in Resources */,
 				CC1A70932061F5490006D3DD /* Rubik-BoldItalic.ttf in Resources */,
@@ -1268,6 +1267,7 @@
 				CC703B782064CC9000743F03 /* MaterialIcons.ttf in Resources */,
 				CC703B7C2064CC9000743F03 /* Entypo.ttf in Resources */,
 				CC1A70922061F5490006D3DD /* Rubik-Black.ttf in Resources */,
+				CCBFDBA5206A73380042CB8B /* Images.xcassets in Resources */,
 				CC703B772064CC9000743F03 /* EvilIcons.ttf in Resources */,
 				CC1A70982061F5490006D3DD /* Rubik-Regular.ttf in Resources */,
 				CC703B7A2064CC9000743F03 /* Ionicons.ttf in Resources */,
