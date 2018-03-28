@@ -39,6 +39,11 @@
     <string>Acessar foto QRCode?</string>
     <key>NSLocationWhenInUseUsageDescription</key>
     <string></string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>682 precisa acessar suas imagens para importar um QR Code</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>682 precisa acessar suas imagens para salvar o QR Code</string>
+
     <key>NSMainNibFile</key>
     <string>LaunchScreen</string>
     <key>NSMainNibFile~ipad</key>

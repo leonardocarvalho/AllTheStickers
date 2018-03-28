@@ -361,7 +361,7 @@ const styles = StyleSheet.create({
   filterButton: {
     color: Colors.LIGHT_GREY,
     fontFamily: 'Rubik-Regular',
-    fontSize: 16,
+    fontSize: 15,
     marginRight: 16,
   },
   filterButtonSelected: {
