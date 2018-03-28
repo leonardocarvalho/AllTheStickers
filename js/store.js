@@ -5,9 +5,7 @@ import storage from 'redux-persist/lib/storage';
 
 import reducer from './reducers';
 
-const persistKey = __DEV__ ? 'dev' : 'root';
-
-const persistedReducer = persistReducer({ key: persistKey, storage }, reducer);
+const persistedReducer = persistReducer({ key: 'root', storage }, reducer);
 const middlewares = [thunk];
 
 const configureStore = async () => {

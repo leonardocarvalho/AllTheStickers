@@ -3,7 +3,11 @@ import firebase from 'react-native-firebase';
 import { connect } from 'react-redux';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { SafeAreaView } from 'react-navigation';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Alert } from 'react-native';
+import ImagePicker from 'react-native-image-picker';
+import mime from 'mime-types';
+import ImageTools from 'react-native-image-tool';
+import jsQR from "jsqr";
 
 import StyleSheet from '../helpers/F8StyleSheet';
 import Colors from '../common/colors';
@@ -49,6 +53,67 @@ class StatusReader extends React.Component {
     this.props.navigation.navigate('Exchange');
   }
 
+  _notifyError = () => {
+    Alert.alert(
+      'Erro ao ler QR Code',
+      'Ocorreu algum erro ao ler a image. Por favor tente novamente',
+      [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
+      { cancelable: false }
+    );
+  }
+
+  _selectImage = () => {
+    ImagePicker.showImagePicker({
+      title: 'Selecione o QR Code das figurinhas para trocar',
+      mediaType: 'photo',
+      maxHeight: 500,
+      maxWidth: 500,
+      cancelButtonTitle: 'Cancelar',
+      takePhotoButtonTitle: 'Tirar uma foto',
+      chooseFromLibraryButtonTitle: 'Escolher imagem da galeria',
+    }, (response) => {
+      if (response.didCancel) return;
+      if (response.error) {
+        this._notifyError();
+        return;
+      }
+
+      const { data, type, width, height } = response;
+      const photoType = type || mime.lookup(uri);
+      const uri = `data:${photoType};base64,${data}`;
+
+      const extractBits = (value, bitStart, bitEnd) => {
+        let result = 0;
+        let shift = bitEnd - bitStart;
+        let curr = value >>> bitStart;
+        while (shift > 0) {
+          shift--;
+          result = (result << 1) | ((curr >>> shift) & 1);
+        }
+        return result;
+      };
+
+      ImageTools
+        .GetImageRGBAs(uri)
+        .then(({ width, height, rgba: encodedRGBA }) => {
+          const rgba = encodedRGBA.reduce((acc, curr) => {
+            acc.push(extractBits(curr, 0, 7));
+            acc.push(extractBits(curr, 8, 15));
+            acc.push(extractBits(curr, 16, 23));
+            acc.push(extractBits(curr, 24, 32));
+            return acc;
+          }, []);
+          try {
+            const { data } = jsQR(rgba, width, height);
+            this._dataScanned(data);
+          } catch (error) {
+            firebase.analytics().logEvent('share_qr_code_read_error', { error });
+            this._notifyError();
+          }
+        });
+    });
+  }
+
   render() {
     return (
       <SafeAreaView style={styles.safeContainer}>
@@ -66,6 +131,11 @@ class StatusReader extends React.Component {
             onRead={event => this._dataScanned(event.data)}
             onClose={() => this.props.navigation.goBack()}
           />
+          <View style={styles.importContainer}>
+            <TouchableOpacity onPress={this._selectImage}>
+              <Text style={styles.importText}>Importar código</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </SafeAreaView>
     );
@@ -78,6 +148,16 @@ export default connect(mapStateToProps, { peerStatusReceived })(StatusReader);
 
 
 const styles = StyleSheet.create({
+  importContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingBottom: 16,
+  },
+  importText: {
+    fontFamily: 'Rubik-Regular',
+    fontSize: 16,
+    color: Colors.DARK_GREY,
+  },
   safeContainer: {
     flex: 1,
     backgroundColor: Colors.WHITE,

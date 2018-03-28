@@ -5,6 +5,8 @@ import android.app.Application;
 import com.facebook.react.ReactApplication;
 import cl.json.RNSharePackage;
 import fr.greweb.reactnativeviewshot.RNViewShotPackage;
+import com.benjamin.rnimagetools.ImageToolsPackage;
+import com.imagepicker.ImagePickerPackage;
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.analytics.RNFirebaseAnalyticsPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -31,6 +33,8 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
             new RNSharePackage(),
             new RNViewShotPackage(),
+            new ImageToolsPackage(),
+            new ImagePickerPackage(),
             new RNFirebasePackage(),
             new RNFirebaseAnalyticsPackage(),
             new VectorIconsPackage(),
