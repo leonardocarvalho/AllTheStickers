@@ -100,7 +100,9 @@ class Home extends React.Component {
     this.state = {
       modalVisible: false,
       selectedStickerNumber: null,
+      filterBy: "all",
     };
+    this.renderSectionTitle = this.renderSectionTitle.bind(this);
   }
 
   componentDidMount() {
@@ -139,9 +141,21 @@ class Home extends React.Component {
     return (
       <View style={styles.sectionHeader}>
         <Text style={styles.headerText}>
-          <Text style={styles.strongText}>{section.title}</Text> • {minIndex} a {maxIndex}
+          <Text style={styles.strongText}>{section.title}</Text>
+          {
+            this.state.filterBy == "all" ? (
+              ` • ${minIndex} a ${maxIndex}`
+            ) : ''
+          }
         </Text>
-        <Text style={[styles.headerText, styles.strongText]}>{obtained}/{sectionLen}</Text>
+        {
+          this.state.filterBy == "all" ? (
+            <Text style={[styles.headerText, styles.strongText]}>{obtained}/{sectionLen}</Text>
+          ) : (
+            <Text style={[styles.headerText, styles.strongText]}>{sectionLen}</Text>
+          )
+        }
+
       </View>
     )
   }
@@ -154,12 +168,26 @@ class Home extends React.Component {
     }
   };
 
+
+  filterStickersBy(filterBy) {
+    switch (filterBy) {
+      case "repeated":
+        return ((sticker) => sticker.count > 1);
+      case "empty":
+        return ((sticker) => sticker.count == 0);
+      default:
+        return ((sticker) => true);
+
+    }
+  }
   _renderDev = () => global.__DEV__ ? <DevOperations /> : null;
 
   render() {
     const { stickers } = this.props;
 
-    let stickersSections = _.chain(stickers)
+    const filteredStickers = _.filter(stickers, this.filterStickersBy(this.state.filterBy));
+
+    let stickersSections = _.chain(filteredStickers)
       .groupBy('section')
       .map((data, title) => ({title, data, key: title}))
       .value();
@@ -180,13 +208,37 @@ class Home extends React.Component {
             <Text style={styles.headerStatus}>
               Faltam
               <Text style={styles.strongText}> {toComplete} figurinhas para completar </Text>
-              o álbum e você tem
-              <Text style={styles.strongText}> {duplicates} figurinhas para trocar</Text>
-            </Text>
-            <Text style={styles.headerInstructions}>
-              Clique nos números abaixo para atualizar sua contagem
+              o álbum
             </Text>
           </View>
+
+          <View style={styles.headerContainer, styles.filterContainer}>
+              <TouchableOpacity onPress={() => this.setState({filterBy: "all"})}>
+                <Text style={[
+                  styles.filterButton,
+                  (this.state.filterBy == "all" ? styles.filterButtonSelected : null)
+                ]}>
+                  TODAS
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => this.setState({filterBy: "repeated"})}>
+                <Text style={[
+                  styles.filterButton,
+                  (this.state.filterBy == "repeated" ? styles.filterButtonSelected : null)
+                ]}>
+                  REPETIDAS { duplicates > 0 ? `(${duplicates})` : ''}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => this.setState({filterBy: "empty"})}>
+                <Text style={[
+                  styles.filterButton,
+                  (this.state.filterBy == "empty" ? styles.filterButtonSelected : null)
+                ]}>
+                  FALTANDO { duplicates > 0 ? `(${toComplete})` : ''}
+                </Text>
+              </TouchableOpacity>
+          </View>
+
           <SectionList
             keyExtractor={(item) => { return item.key }}
             renderItem={this.renderStickerSection}
@@ -292,11 +344,11 @@ const styles = StyleSheet.create({
   },
   strongText: {
     fontFamily: 'Rubik-Medium',
-    color: Colors.DARK_GREEN,
+    color: Colors.ALMOST_BLACK,
   },
   headerStatus: {
     fontFamily: 'Rubik-Regular',
-    fontSize: 16,
+    fontSize: 18,
     color: Colors.DARK_GREY,
   },
   headerInstructions: {
@@ -306,6 +358,23 @@ const styles = StyleSheet.create({
     color: Colors.DARK_GREY,
     opacity: 0.85,
   },
+  filterButton: {
+    color: Colors.LIGHT_GREY,
+    fontFamily: 'Rubik-Regular',
+    fontSize: 16,
+    marginRight: 16,
+  },
+  filterButtonSelected: {
+    color: Colors.DARK_GREEN,
+    fontFamily: 'Rubik-Medium',
+  },
+  filterContainer: {
+    padding: 16,
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    borderBottomColor: Colors.ALMOST_WHITE,
+    borderBottomWidth: 1,
+  }
 });
 
 const badgeStyles = StyleSheet.create({
@@ -327,4 +396,5 @@ const badgeStyles = StyleSheet.create({
     fontFamily: 'Rubik-Medium',
     fontSize: 10,
   },
+
 });
