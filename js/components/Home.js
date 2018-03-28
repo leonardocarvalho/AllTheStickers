@@ -204,11 +204,11 @@ class Home extends React.Component {
         <View style={styles.container}>
           {this._renderDev()}
           <View style={styles.headerContainer}>
-            <Text style={styles.headerTitle}>Minhas Figurinhas • Rússia 2018</Text>
+            <Text style={styles.headerTitle}>Figurinhas • Rússia 2018</Text>
             <Text style={styles.headerStatus}>
               Faltam
-              <Text style={styles.strongText}> {toComplete} figurinhas para completar </Text>
-              o álbum
+              <Text style={styles.strongText}> {toComplete} figurinhas para você
+               completar </Text>o álbum
             </Text>
           </View>
 
@@ -333,14 +333,14 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     paddingTop: 10,
-    marginBottom: 20,
+    marginBottom: 10,
     paddingHorizontal: 15,
   },
   headerTitle: {
     fontFamily: 'Rubik-Medium',
     fontSize: 22,
     color: Colors.DARK_GREEN,
-    marginBottom: 12,
+    // marginBottom: 4,
   },
   strongText: {
     fontFamily: 'Rubik-Medium',
@@ -348,7 +348,7 @@ const styles = StyleSheet.create({
   },
   headerStatus: {
     fontFamily: 'Rubik-Regular',
-    fontSize: 18,
+    fontSize: 16,
     color: Colors.DARK_GREY,
   },
   headerInstructions: {
@@ -370,7 +370,7 @@ const styles = StyleSheet.create({
   },
   filterContainer: {
     padding: 16,
-    flexWrap: 'wrap',
+    flexWrap: 'nowrap',
     flexDirection: 'row',
     borderBottomColor: Colors.ALMOST_WHITE,
     borderBottomWidth: 1,
