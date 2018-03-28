@@ -1,6 +1,6 @@
 import React from  'react';
 import { connect } from 'react-redux';
-import { View, Text, TouchableOpacity, ScrollView} from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import _ from 'lodash';
 import firebase from 'react-native-firebase';
@@ -95,9 +95,9 @@ class ExchangeScreen extends React.Component {
       return null;
     }
 
-    var {height, width} = Dimensions.get('window');
+    var { height, width } = Dimensions.get('window');
     let rowStickersCount = Math.floor((width - 2 * STICKER_SECTION_PADDING)/ROUND_CONTAINER_DIAMETER);
-    const emptyItemsCount = (rowStickersCount - (stickers.length % rowStickersCount)) % rowStickersCount;
+    const emptyItemsCount = (rowStickersCount - (stickerList.length % rowStickersCount)) % rowStickersCount;
 
     let stickerListWithEmptyItems = stickerList.concat(Array(emptyItemsCount).fill(-1))
 

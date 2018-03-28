@@ -28,8 +28,9 @@ class StatusReader extends React.Component {
   };
 
   _dataScanned(data) {
+    let values;
     try {
-      const values = decodeStickers(data, this.props.stickers.length);
+      values = decodeStickers(data, this.props.stickers.length);
     } catch(error) {
       firebase.analytics().logEvent('read_qr_code_error', { encoded: error });
       return;

@@ -2,7 +2,7 @@ import React from 'react';
 import firebase from 'react-native-firebase';
 import hoistStatics from 'hoist-non-react-statics';
 
-export default (Component) => {
+export default (Component, screenName) => {
 
   class ScreenLogger extends React.Component {
     static displayName = Component.displayName;
@@ -10,7 +10,7 @@ export default (Component) => {
     componentDidMount() {
       this._listener = this.props.navigation.addListener(
         'didFocus',
-        () => firebase.analytics().setCurrentScreen(Component.displayName),
+        () => firebase.analytics().setCurrentScreen(screenName),
       );
     }
 

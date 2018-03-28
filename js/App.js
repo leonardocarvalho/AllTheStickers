@@ -19,14 +19,15 @@ import screenLogger from './helpers/screenLogger';
 
 
 const RootStack = StackNavigator(
-  _.mapValues({
-    Intro: { screen: Intro },
-    Home: { screen: Home },
-    ExchangeOptions: { screen: ExchangeOptionsScreen },
-    StickerStatus: { screen: StickerStatus },
-    StatusReader: { screen: StatusReader },
-    Exchange:  { screen: ExchangeScreen },
-  }, (screenConfig) => ({ ...screenConfig, screen: screenLogger(screenConfig.screen) })),
+  {
+    // Can't be smart here because keys can be minified in production
+    Intro: { screen: screenLogger(Intro, 'Intro') },
+    Home: { screen: screenLogger(Home, 'Home') },
+    ExchangeOptions: { screen: screenLogger(ExchangeOptionsScreen, 'ExchangeOptionsScreen') },
+    StickerStatus: { screen: screenLogger(StickerStatus, 'StickerStatus') },
+    StatusReader: { screen: screenLogger(StatusReader, 'StatusReader') },
+    Exchange:  { screen: screenLogger(ExchangeScreen, 'ExchangeScreen') },
+  },
   {
     initialRouteName: 'Intro',
     cardStyle: {
