@@ -36,17 +36,14 @@ class StickerStatus extends React.Component {
     headerTintColor: Colors.DARK_GREEN
   };
 
-
   _saveImage() {
-    captureRef(this.refs.QRCodeCardShare, {
+    captureRef(this.qrCodeContainer, {
       format: "png",
       quality: 1,
       result: "data-uri"
     })
     .then(
       uri => {
-        // console.log("Image saved to", uri)
-
         Share.open({
           url: uri
         }).catch((err) => { err && console.log(err); })
@@ -68,11 +65,11 @@ class StickerStatus extends React.Component {
               pelo Whatsapp para trocar as figurinhas que você tem repetidas.
             </Text>
           </View>
-          <View style={styles.cardContainer} ref="QRCodeCardShare">
+          <View style={styles.cardContainer} ref={o => this.qrCodeContainer = o}>
             <View style={styles.qrCodeContainer}>
               <QRCode
                 value={encodeStickers(this.props.stickers)}
-                size={Math.min((Dimensions.get("window").width - 2 * 30), 300)} />
+                size={Math.min((Dimensions.get("window").width - 2 * 31), 300)} />
             </View>
             <View style={styles.cardHeaderContainer}>
               <Text style={styles.cardHeaderTitle}>
