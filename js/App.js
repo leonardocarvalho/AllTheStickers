@@ -1,10 +1,12 @@
 import _ from 'lodash';
 import React from 'react';
+import { View }  from 'react-native';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { StackNavigator, SafeAreaView } from 'react-navigation';
 import firebase from 'react-native-firebase';
 
+import { performMigrations } from './actions';
 import StyleSheet from './helpers/F8StyleSheet';
 import Colors from './common/colors';
 import configureStore from './store';
@@ -75,13 +77,18 @@ export default class App extends React.Component {
     });
   }
 
+  _stateLoaded = () => {
+    this.state.store.dispatch(performMigrations());
+  }
+
   render() {
     if (!this.state.store) return null;
 
     return (
       <Provider store={this.state.store}>
         <PersistGate loading={null} persistor={this.state.persistor}>
-            <RootStack />
+          <View onLayout={this._stateLoaded} />
+          <RootStack />
         </PersistGate>
       </Provider>
     );

@@ -13,6 +13,10 @@ const stickers = (state = cardsFixture, action) => {
       return newState;
     case 'CLEAR_STICKERS':
       return cardsFixture;
+    case 'ZERO_BASED_CARDS':
+      if (!state.find(s => s.stickerNumber === 0)) {
+        return state.map(s => ({ ...s, stickerNumber: s.stickerNumber - 1 }));
+      }
     default:
       return state;
   }

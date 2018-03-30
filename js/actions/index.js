@@ -14,9 +14,17 @@ const introDone = () => (dispatch) => {
   dispatch({ type: 'INTRO_DONE' });
 };
 
+const migrations = [
+  'ZERO_BASED_CARDS',
+];
+const performMigrations = () => (dispatch) => {
+  migrations.forEach((type) => dispatch({ type }));
+};
+
 export {
   increaseStickerCount,
   decreaseStickerCount,
   peerStatusReceived,
   introDone,
+  performMigrations,
 };

@@ -681,4 +681,4 @@ export default [
   {section: "Clássicos", name: "10 Spain WCL"},
   {section: "Clássicos", name: "Pele WCL"},
   {section: "Clássicos", name: "Miroslav Klose WCL"}
-].map((sticker, index) => ({ ...sticker, count: 0, stickerNumber: index + 1 }));
+].map((sticker, index) => ({ ...sticker, count: 0, stickerNumber: index }));
