@@ -76,8 +76,7 @@ class StickerStatus extends React.Component {
                 MINHAS FIGURINHAS DO ÁLBUM RÚSSIA 2018
               </Text>
               <Text style={styles.cardSubtitle}>
-                Essas são minhas figurinhas repetidas do álbum da Copa da Rússia
-                2018.
+                Essas são minhas figurinhas repetidas do álbum da Copa.
               </Text>
               <Text style={styles.cardSubtitle}>
                 Use o app <Text style={styles.strong}>682</Text> para descobrir quais figurinhas você pode trocar

@@ -204,7 +204,7 @@ class Home extends React.Component {
         <View style={styles.container}>
           {this._renderDev()}
           <View style={styles.headerContainer}>
-            <Text style={styles.headerTitle}>Figurinhas • Rússia 2018</Text>
+            <Text style={styles.headerTitle}>Figurinhas • Álbum 2018</Text>
             <Text style={styles.headerStatus}>
               Faltam
               <Text style={styles.strongText}> {toComplete} figurinhas para você

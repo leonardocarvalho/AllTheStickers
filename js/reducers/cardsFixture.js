@@ -1,6 +1,6 @@
 export default [
   {section: "Especiais", name: "Panini Knight Logo"},
-  {section: "Especiais", name: "FIFA Logo"},
+  {section: "Especiais", name: "Logo"},
   {section: "Especiais", name: "World Cup Trophy"},
   {section: "Especiais", name: "’18 World Cup Graphic Top"},
   {section: "Especiais", name: "’18 World Cup Graphic Bottom"},
